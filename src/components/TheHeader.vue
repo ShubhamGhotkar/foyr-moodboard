@@ -33,6 +33,8 @@ export default {};
 
   padding: 0.6rem 4rem 0.6rem 2rem;
 
+  position: fixed;
+
   &_logo {
     font-size: 3.2rem;
     color: antiquewhite;
