@@ -4,9 +4,9 @@
       <div
         class="slider_items"
         v-for="(slider, index) in showCard"
-        :key="slider.name"
+        :key="slider.id"
         ref="sliderItem"
-        @click="handleSliderClick(slider)"
+        @click="() => handleSliderClick(slider)"
       >
         <div class="slider_items-images">
           <img :src="slider.src" alt="img" class="slider_items-images-img" />
@@ -120,6 +120,7 @@ export default {
     },
     handleSliderClick(data) {
       this.$emit("handleCard", data.name, this.name);
+      console.log("handleCard", data.name, this.name);
     },
   },
 };

@@ -25,13 +25,32 @@
           </div>
         </div>
         <div>
+          <h3 class="header-2 moodboard-heading">MoodBoards</h3>
+          <div class="moodboard">
+            <div class="moodboard_imgs">
+              <img
+                src="../assets/img-2.png"
+                alt="moodboad image"
+                class="moodboard_imgs-img"
+              />
+            </div>
+            <div class="moodboard_info">
+              <h3 class="moodboard_info-heading">
+                You haven't created moodboard yet.
+              </h3>
+              <p class="moodboard_info-para">Make your first moodboard now!</p>
+              <button class="main-btn">Create New MoodBoard</button>
+            </div>
+          </div>
+        </div>
+        <div>
           <div class="style_container-btn">
             <h3 class="header-2">Style</h3>
             <button
               v-for="button in styleCardArray"
               :key="button.name"
               class="style-btn"
-              @click="handleStyleClick(button.name, `styleSlider`)"
+              @click="() => handleStyleClick(button.name, `styleSlider`)"
             >
               {{ button.name }}
             </button>
@@ -58,6 +77,7 @@
 <script>
 import SideBar from "@/components/SideBar.vue";
 import CardSlider from "@/components/CardSlider.vue";
+import uniqid from "uniqid";
 
 export default {
   created() {
@@ -74,6 +94,7 @@ export default {
         {
           name: "Minimilist",
           item: 10,
+          id: uniqid(),
           src: `https://images.unsplash.com/photo-1571898223382-0aa3499f0f2a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDJ8TThqVmJMYlRSd3N8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=60`,
           templatesList: [
             {
@@ -116,6 +137,7 @@ export default {
         {
           name: "Exlectic",
           item: 10,
+          id: uniqid(),
           src: `https://plus.unsplash.com/premium_photo-1664699099351-4364a337288c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDZ8TThqVmJMYlRSd3N8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=60`,
           templatesList: [
             {
@@ -158,6 +180,7 @@ export default {
         {
           name: "Japandi",
           item: 10,
+          id: uniqid(),
           src: `https://images.unsplash.com/photo-1685790474502-fa665337538c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDd8TThqVmJMYlRSd3N8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=60`,
           templatesList: [
             {
@@ -200,6 +223,7 @@ export default {
         {
           name: "Bohemian",
           item: 10,
+          id: uniqid(),
           src: `https://images.unsplash.com/photo-1532103054090-3491f1a05d0d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDEzfE04alZiTGJUUndzfHxlbnwwfHx8fHw%3D&auto=format&fit=crop&w=500&q=60`,
           templatesList: [
             {
@@ -242,6 +266,7 @@ export default {
         {
           name: "Mid-Century",
           item: 10,
+          id: uniqid(),
           src: `https://images.unsplash.com/photo-1685475512320-eede8aea2b95?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDIxfE04alZiTGJUUndzfHxlbnwwfHx8fHw%3D&auto=format&fit=crop&w=500&q=60`,
           templatesList: [
             {
@@ -284,6 +309,7 @@ export default {
         {
           name: "Rustic",
           item: 10,
+          id: uniqid(),
           src: `https://images.unsplash.com/photo-1547057560-0180a6521dfa?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDI1fE04alZiTGJUUndzfHxlbnwwfHx8fHw%3D&auto=format&fit=crop&w=500&q=60`,
           templatesList: [
             {
@@ -326,6 +352,7 @@ export default {
         {
           name: "Transitional",
           item: 10,
+          id: uniqid(),
           src: `https://images.unsplash.com/photo-1686943812586-65d1d30ab40f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDI4fE04alZiTGJUUndzfHxlbnwwfHx8fHw%3D&auto=format&fit=crop&w=500&q=60`,
           templatesList: [
             {
@@ -370,6 +397,7 @@ export default {
         {
           name: "room Templates 1",
           item: 10,
+          id: uniqid(),
           src: `https://images.unsplash.com/photo-1687851711955-156c984e7f71?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDl8aVVJc25WdGpCMFl8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=60`,
           templatesList: [
             {
@@ -412,6 +440,7 @@ export default {
         {
           name: "room Templates 2",
           item: 10,
+          id: uniqid(),
           src: `https://images.unsplash.com/photo-1688435527195-a74720ee6da7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDE1fGlVSXNuVnRqQjBZfHxlbnwwfHx8fHw%3D&auto=format&fit=crop&w=500&q=60`,
           templatesList: [
             {
@@ -454,6 +483,7 @@ export default {
         {
           name: "room Templates 3",
           item: 10,
+          id: uniqid(),
           src: `https://images.unsplash.com/photo-1687822397910-e7b0b016cf7a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDh8aVVJc25WdGpCMFl8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=60`,
           templatesList: [
             {
@@ -496,6 +526,7 @@ export default {
         {
           name: "room Templates 4",
           item: 10,
+          id: uniqid(),
           src: `https://images.unsplash.com/photo-1687912089861-9d208efd7d5c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDMzfGlVSXNuVnRqQjBZfHxlbnwwfHx8fHw%3D&auto=format&fit=crop&w=500&q=60`,
           templatesList: [
             {
@@ -538,6 +569,7 @@ export default {
         {
           name: "room Templates 5",
           item: 10,
+          id: uniqid(),
           src: `https://images.unsplash.com/photo-1685113227373-37eceacc5985?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDMyfGlVSXNuVnRqQjBZfHxlbnwwfHx8fHw%3D&auto=format&fit=crop&w=500&q=60`,
           templatesList: [
             {
@@ -580,6 +612,7 @@ export default {
         {
           name: "room Templates 6",
           item: 10,
+          id: uniqid(),
           src: `https://images.unsplash.com/photo-1687761478797-4c178d4289de?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDM4fGlVSXNuVnRqQjBZfHxlbnwwfHx8fHw%3D&auto=format&fit=crop&w=500&q=60`,
           templatesList: [
             {
@@ -622,6 +655,7 @@ export default {
         {
           name: "room Templates 7",
           item: 10,
+          id: uniqid(),
           src: `https://images.unsplash.com/photo-1688208092684-6400730f325f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDQ5fGlVSXNuVnRqQjBZfHxlbnwwfHx8fHw%3D&auto=format&fit=crop&w=500&q=60`,
           templatesList: [
             {
@@ -720,11 +754,36 @@ export default {
 
     display: flex;
     flex-direction: column;
-    gap: 1rem;
+    gap: 1.5rem;
   }
 }
 .side-bar {
   grid-column: 1/2;
+}
+/*Moodboard style */
+.moodboard-heading {
+  margin-bottom: 1rem;
+}
+.moodboard {
+  width: 100%;
+  padding: 3rem 0;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 4rem;
+
+  border: 2px solid rgb(216, 214, 214);
+
+  &_info {
+    &-heading {
+      font-size: 2.2rem;
+    }
+    &-para {
+      font-size: 1.4rem;
+      margin: 0.8rem 0;
+    }
+  }
 }
 /*TEMPLATES STYLE */
 .templates {
@@ -736,7 +795,7 @@ export default {
   border: 2px solid rgb(216, 214, 214);
   border-radius: 0.6rem;
   &_info {
-    flex: 0 0 35%;
+    flex: 0 0 40%;
     padding: 3rem;
     &-heading {
       font-size: 2.4rem;
@@ -748,7 +807,7 @@ export default {
     }
   }
   &_imgs {
-    flex: 0 0 65%;
+    flex: 0 0 60%;
     overflow: hidden;
     height: 20rem;
 
@@ -760,11 +819,13 @@ export default {
 }
 /*STYLE BUTTON STYLE */
 .style_container-btn {
-  width: 50%;
+  width: 53%;
   height: fit-content;
   display: flex;
   align-items: center;
+  justify-content: space-between;
   gap: 0.6rem;
+  // background: yellow;
 }
 
 .button-con {

@@ -23,6 +23,9 @@ export default {
 html {
   font-size: 10px;
 }
+body {
+  font-family: sans-serif;
+}
 
 #app {
   width: 100vw;
@@ -69,7 +72,7 @@ html {
 }
 
 .header-2 {
-  font-size: 2.4rem;
+  font-size: 2rem;
   padding: 1rem;
 }
 
