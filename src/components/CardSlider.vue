@@ -6,6 +6,7 @@
         v-for="(slider, index) in showCard"
         :key="slider.name"
         ref="sliderItem"
+        @click="handleSliderClick(slider)"
       >
         <div class="slider_items-images">
           <img :src="slider.src" alt="img" class="slider_items-images-img" />
@@ -66,7 +67,7 @@
 
 <script>
 export default {
-  props: ["sliderArray"],
+  props: ["sliderArray", "name"],
   data() {
     return {
       slideToShow: 5,
@@ -116,6 +117,9 @@ export default {
           this.currentIndex--;
         }
       }
+    },
+    handleSliderClick(data) {
+      this.$emit("handleCard", data.name, this.name);
     },
   },
 };

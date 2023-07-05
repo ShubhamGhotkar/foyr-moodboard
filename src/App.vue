@@ -24,6 +24,9 @@ html {
   font-size: 10px;
 }
 
+#app {
+  width: 100vw;
+}
 .sidebar-svg {
   stroke: antiquewhite;
   width: 2.8rem;
@@ -70,20 +73,16 @@ html {
   padding: 1rem;
 }
 
-@keyframes slideAnimation {
-  0% {
-    transform: translateX(0);
-  }
-  100% {
-    transform: translateX(-100%);
-  }
-}
-
-.slider-transition {
-  animation: slideAnimation 1s ease-in-out;
-}
-
 .mb-1 {
   margin-bottom: 1rem;
+}
+
+.main-btn {
+  border: none;
+  background-color: rgb(247, 189, 153);
+  padding: 1.2rem;
+  border-radius: 0.8rem;
+  font-size: 1.4rem;
+  font-weight: 500;
 }
 </style>

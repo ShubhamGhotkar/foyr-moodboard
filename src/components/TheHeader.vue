@@ -34,7 +34,7 @@ export default {};
   padding: 0.6rem 4rem 0.6rem 2rem;
 
   position: fixed;
-
+  z-index: 9999;
   &_logo {
     font-size: 3.2rem;
     color: antiquewhite;
