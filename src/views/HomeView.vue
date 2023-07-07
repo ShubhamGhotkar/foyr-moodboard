@@ -1,6 +1,9 @@
 <template>
   <main class="home-container">
-    <SideBar class="side-bar" />
+    <div class="side-bar">
+      <SideBar />
+    </div>
+
     <div class="slider-container">
       <div class="slider-container-main">
         <div>
@@ -15,13 +18,6 @@
               </p>
               <button class="main-btn">Try Templates</button>
             </div>
-            <div class="templates_imgs">
-              <img
-                src="../assets/img-1.png"
-                alt="templates photo"
-                class="templates_imgs-img"
-              />
-            </div>
           </div>
         </div>
         <div>
@@ -29,7 +25,7 @@
           <div class="moodboard">
             <div class="moodboard_imgs">
               <img
-                src="../assets/img-2.png"
+                src="../assets/images/moodBoard.svg"
                 alt="moodboad image"
                 class="moodboard_imgs-img"
               />
@@ -46,28 +42,38 @@
         <div>
           <div class="style_container-btn">
             <h3 class="header-2">Style</h3>
-            <button
-              v-for="button in styleCardArray"
-              :key="button.name"
-              class="style-btn"
-              @click="() => handleStyleClick(button.name, `styleSlider`)"
-            >
-              {{ button.name }}
-            </button>
+            <div class="style_container-btn-container">
+              <button
+                v-for="button in styleCardArray"
+                :key="button.name"
+                class="style-btn"
+                @click="() => handleStyleClick(button.name, `styleSlider`)"
+              >
+                {{ button.name }}
+              </button>
+            </div>
+            <p class="see-all">See all</p>
           </div>
-          <CardSlider
-            :sliderArray="styleCardSliders"
-            name="styleSlider"
-            @handleCard="handleStyleClick"
-          />
+          <div class="cardSlider-container">
+            <CardSlider
+              :sliderArray="styleCardSliders"
+              name="styleSlider"
+              @handleCard="handleStyleClick"
+            />
+          </div>
         </div>
         <div>
-          <h3 class="header-2">Room Moodboard Templates <span>60+</span></h3>
-          <CardSlider
-            :sliderArray="roomCardSliders"
-            name="roomSlider"
-            @handleCard="handleStyleClick"
-          />
+          <div class="room-container">
+            <h3 class="header-2">Room Moodboard Templates <span>60+</span></h3>
+            <p class="see-all">See all</p>
+          </div>
+          <div class="cardSlider-container">
+            <CardSlider
+              :sliderArray="roomCardSliders"
+              name="roomSlider"
+              @handleCard="handleStyleClick"
+            />
+          </div>
         </div>
       </div>
     </div>
@@ -77,6 +83,7 @@
 <script>
 import SideBar from "@/components/SideBar.vue";
 import CardSlider from "@/components/CardSlider.vue";
+
 import uniqid from "uniqid";
 
 export default {
@@ -725,7 +732,6 @@ export default {
         let cards = this.roomCardArray.find((card) => card.name === data);
         console.log("CARDS", cards);
         this.roomCardSliders = cards.templatesList;
-        //
       }
     },
   },
@@ -733,33 +739,36 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.cardSlider-container {
+  width: 100%;
+  // margin: 0 auto;
+}
 .home-container {
   width: 100vw;
+  min-height: 100vh;
   height: auto;
   display: grid;
-  grid-template-columns: 7vw 93vw;
-  // overflow: hidden;
-}
-.slider-container {
-  width: 100%;
-  grid-column: 2/3;
-  padding-top: 7rem;
-  min-height: 100vh;
-  margin: 0 auto;
-  background-color: whitesmoke;
-
-  &-main {
-    width: 96%;
-    margin: 0 auto;
-
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
-  }
+  grid-template-columns: 6.5vw 93.5vw;
 }
 .side-bar {
   grid-column: 1/2;
 }
+.slider-container {
+  grid-column: 2/3;
+  padding-top: 6.5rem;
+  min-height: 100vh;
+  background-color: #fff;
+  padding: 8.5rem 4.8rem 2.8rem 2.6rem;
+  // background: yellow;
+
+  &-main {
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+}
+
 /*Moodboard style */
 .moodboard-heading {
   margin-bottom: 1rem;
@@ -773,15 +782,20 @@ export default {
   align-items: center;
   gap: 4rem;
 
-  border: 2px solid rgb(216, 214, 214);
-
+  border: 2px solid #e8e8e8;
+  background: #fdfdfd;
+  border-radius: 0.4rem;
   &_info {
     &-heading {
       font-size: 2.2rem;
+      font-weight: 700;
+      line-height: normal;
+      color: #222021;
     }
     &-para {
       font-size: 1.4rem;
       margin: 0.8rem 0;
+      font-weight: 400;
     }
   }
 }
@@ -789,43 +803,46 @@ export default {
 .templates {
   width: 100%;
   margin-bottom: 1rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border: 2px solid rgb(216, 214, 214);
-  border-radius: 0.6rem;
+  border: 1.5px solid #e8e8e8;
+  border-radius: 0.4rem;
+  background-image: url("../assets/images/Banner-img.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+
   &_info {
-    flex: 0 0 40%;
-    padding: 3rem;
+    width: 45%;
+    padding: 3.5rem;
     &-heading {
       font-size: 2.4rem;
+      font-style: normal;
+      font-weight: 700;
+      line-height: normal;
+      color: #0e0e0e;
     }
     &-para {
       font-size: 1.6rem;
-      color: gray;
-      padding: 1rem 0;
-    }
-  }
-  &_imgs {
-    flex: 0 0 60%;
-    overflow: hidden;
-    height: 20rem;
-
-    &-img {
-      height: 100%;
-      width: 100%;
+      color: #222021;
+      padding: 1.4rem 0;
+      font-weight: 400;
     }
   }
 }
 /*STYLE BUTTON STYLE */
 .style_container-btn {
-  width: 53%;
+  width: 100%;
   height: fit-content;
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 0.6rem;
-  // background: yellow;
+
+  &-container {
+    display: flex;
+    align-items: center;
+    font-family: Montserrat;
+    font-weight: 700;
+    gap: 1rem;
+  }
 }
 
 .button-con {
@@ -835,8 +852,24 @@ export default {
 
 .header-2 > span {
   font-size: 1.6rem;
-  background-color: rgba(247, 128, 107, 0.749);
+  background-color: #e9beb3;
   border-radius: 0.6rem;
   padding: 0.6rem 1.2rem;
+}
+
+.see-all {
+  color: #222021;
+  margin: 0 3rem 0 auto;
+  font-size: 1.4rem;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  cursor: pointer;
+}
+
+.room-container {
+  width: 100%;
+  display: flex;
+  align-items: center;
 }
 </style>
