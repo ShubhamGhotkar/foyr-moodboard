@@ -3,15 +3,19 @@
     <div class="slider" ref="sliderContainer" @scroll="handleScrollEvent">
       <div
         class="slider_items"
-        v-for="(slider, index) in showCard"
+        v-for="slider in sliderData"
         :style="handleScroll"
-        :key="slider.id + index"
+        :key="slider.id"
         ref="sliderItem"
         @click="() => handleSliderClick(slider)"
       >
         <div class="slider_items-images">
-          <img :src="slider.src" alt="img" class="slider_items-images-img" />
-          <div class="slider_items-images-viewstyle">
+          <img
+            :src="slider.thumbnail"
+            alt="img"
+            class="slider_items-images-img"
+          />
+          <div class="slider_items-images-viewstyle" v-if="!isTemplatesClick">
             <button class="slider_items-images-viewstyle-btn">
               <svg
                 width="9"
@@ -31,8 +35,8 @@
           </div>
         </div>
         <div class="slider_items-info">
-          <p class="slider_items-info-tittle">{{ slider.name }}</p>
-          <p class="slider_items-info-items">{{ slider.item }} items</p>
+          <p class="slider_items-info-tittle">{{ slider._id }}</p>
+          <p class="slider_items-info-items">{{ slider.count }} items</p>
         </div>
       </div>
     </div>
@@ -90,10 +94,17 @@ export default {
       leftSliderClick: false,
       currentIndex: 0,
       scrollX: 0,
+
+      //
+      sliderData: [],
+      isTemplatesClick: false,
     };
   },
   created() {
     this.rightSlideCount = this.sliderArray.length % this.slideToShow;
+    this.sliderArray.map((slider) => console.log(slider));
+    this.sliderData = this.sliderArray;
+    console.log(this.sliderData);
   },
   computed: {
     handleScroll() {
@@ -113,13 +124,13 @@ export default {
       return false;
     },
     showCard() {
-      let cardToShow = this.sliderArray.slice(
-        this.currentIndex,
-        this.slideToShow + this.currentIndex
-      );
+      // let cardToShow = this.sliderArray.slice(
+      //   this.currentIndex,
+      //   this.slideToShow + this.currentIndex
+      // );
       // return cardToShow;
 
-      console.log(cardToShow);
+      // console.log(cardToShow);
       return this.sliderArray;
     },
   },
@@ -151,38 +162,53 @@ export default {
       }
     },
     handleSliderClick(data) {
-      this.$emit("handleCard", data.name, this.name);
-      console.log("handleCard", data.name, this.name);
+      let sliderTemplatesArray = data.templates.map((slider) => {
+        return {
+          _id: slider.title,
+          src: slider.image,
+          count: slider.countOfCommands,
+          id: slider.accountId + Math.random(),
+        };
+      });
+      this.sliderData = sliderTemplatesArray;
+      this.isTemplatesClick = true;
+      // console.log("sliderObj", sliderObj);
+      // console.log("DATA", data);
+      // this.$emit("handleCard", data.name, this.name);
+      // console.log("handleCard", data.name, this.name);
     },
     handleKeyEvent(e) {
       window.alert(e.target);
     },
     handleScrollEvent() {
+      // to acess the slider container
       const sliderContainer = this.$refs.sliderContainer;
+      // to get scroll position
       const scrollPosition = sliderContainer.scrollLeft;
+      // total width of sliderContainer
       const totalWidth = sliderContainer.scrollWidth;
+      // width of slider card
       const containerWidth = sliderContainer.offsetWidth;
 
+      // to check how much card scroll in percentage
       const scrollPercentage =
         (scrollPosition / (totalWidth - containerWidth)) * 100;
 
+      // to calculate card width
       const cardWidth = 100 / this.slideToShow;
 
       const scrolledSlides = Math.floor(scrollPercentage / cardWidth) / 2;
-      console.log(
-        "scrollPercentage",
-        scrollPercentage,
-        "cardWidth",
-        cardWidth,
-        "scrolledSlides",
-        scrolledSlides
-      );
 
       this.leftSlideCount = scrolledSlides;
       this.leftSliderClick = true;
+      //scrolledSlides means how much slides are scroll
       this.rightSlideCount = Math.floor(
         this.sliderArray.length - this.slideToShow - scrolledSlides
       );
+    },
+
+    sliderSrc(data) {
+      console.log("DATA", data);
     },
   },
 };

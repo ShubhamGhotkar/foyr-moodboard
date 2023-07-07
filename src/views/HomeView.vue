@@ -56,7 +56,7 @@
           </div>
           <div class="cardSlider-container">
             <CardSlider
-              :sliderArray="styleCardSliders"
+              :sliderArray="inspirationData"
               name="styleSlider"
               @handleCard="handleStyleClick"
             />
@@ -69,7 +69,7 @@
           </div>
           <div class="cardSlider-container">
             <CardSlider
-              :sliderArray="roomCardSliders"
+              :sliderArray="roomArray"
               name="roomSlider"
               @handleCard="handleStyleClick"
             />
@@ -83,6 +83,7 @@
 <script>
 import SideBar from "@/components/SideBar.vue";
 import CardSlider from "@/components/CardSlider.vue";
+import { roomData, inspirationTypeData } from "../data/demoData";
 
 import uniqid from "uniqid";
 
@@ -90,6 +91,8 @@ export default {
   created() {
     this.styleCardSliders = this.styleCardArray;
     this.roomCardSliders = this.roomCardArray;
+    this.roomArray = roomData;
+    this.inspirationData = inspirationTypeData;
   },
   components: {
     SideBar,
@@ -721,6 +724,9 @@ export default {
       ],
       styleCardSliders: [],
       roomCardSliders: [],
+      //  UPDATED CODE BELOW
+      roomArray: [],
+      inspirationData: [],
     };
   },
   methods: {
