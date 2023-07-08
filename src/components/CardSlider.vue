@@ -1,37 +1,36 @@
 <template>
   <section class="slider-section">
+    <!-- FOR MOODBOARD CARDS -->
     <div
       class="slider"
-      ref="sliderContainer"
+      :ref="`${name}-sliderContainer`"
       @scroll="handleScrollEvent"
       v-if="name === `moodBoard`"
     >
       <div
         class="slider_items"
-        v-for="(slider, index) in sliderArray"
+        v-for="(slider, index) in sliderData"
         :style="handleScroll"
-        :key="slider.id + `${Math.random()}`"
-        ref="sliderItem"
-        @click="() => handleSliderClick(slider)"
+        :key="slider._id"
+        @click="handleSliderClick(slider)"
       >
-        <!-- CARDS  -->
         <MoodboardProjectCard :data="slider" :index="index" />
       </div>
     </div>
-    <!-- START -->
+
+    <!-- FOR CARDS -->
     <div
       class="slider"
-      ref="sliderContainer"
+      :ref="`${name}-sliderContainer`"
       @scroll="handleScrollEvent"
-      v-else
+      v-if="name !== 'moodBoard'"
     >
       <div
         class="slider_items"
         v-for="slider in sliderData"
         :style="handleScroll"
         :key="slider.id + `${Math.random()}`"
-        ref="sliderItem"
-        @click="() => handleSliderClick(slider)"
+        @click="handleSliderClick(slider)"
       >
         <div class="slider_items-images">
           <img
@@ -68,7 +67,7 @@
     <!-- END -->
     <div
       class="slider_left-btn arrow-btn"
-      @click="() => handleSlider(`left`)"
+      @click="handleSlider(`left`)"
       v-if="checkLeft"
     >
       <svg
@@ -88,7 +87,7 @@
     </div>
     <div
       class="slider_right-btn arrow-btn"
-      @click="() => handleSlider(`right`)"
+      @click="handleSlider(`right`)"
       v-if="checkRight"
     >
       <svg
@@ -122,7 +121,7 @@ export default {
       currentIndex: 0,
       scrollX: 0,
 
-      //
+      //SLIDER DATA
       sliderData: [],
       isTemplatesClick: false,
     };
@@ -130,19 +129,16 @@ export default {
   components: {
     MoodboardProjectCard,
   },
-  mounted() {
-    // console.log(this.sliderData);
-  },
+  mounted() {},
   created() {
-    this.rightSlideCount = this.sliderArray.length % this.slideToShow;
-    // this.sliderArray.map((slider) => console.log(slider));
+    this.rightSlideCount = this.sliderArray.length - this.slideToShow;
     this.sliderData = this.sliderArray;
-    // console.log(this.sliderData);
   },
   computed: {
     handleScroll() {
-      return `transform: translateX(${this.scrollX}%);
-`;
+      return `
+            transform: translateX(${this.scrollX}px);
+      `;
     },
     checkLeft() {
       if (this.leftSlideCount > 0 && this.leftSliderClick) {
@@ -155,16 +151,6 @@ export default {
         return true;
       }
       return false;
-    },
-    showCard() {
-      // let cardToShow = this.sliderArray.slice(
-      //   this.currentIndex,
-      //   this.slideToShow + this.currentIndex
-      // );
-      // return cardToShow;
-
-      // console.log(cardToShow);
-      return this.sliderArray;
     },
   },
   methods: {
@@ -183,14 +169,14 @@ export default {
           this.rightSlideCount--;
           this.leftSlideCount++;
           this.currentIndex += 1;
-          this.scrollX -= 112;
+          this.scrollX -= 276;
         }
       } else if (action === "left") {
         if (this.leftSlideCount > 0) {
           this.rightSlideCount++;
           this.leftSlideCount--;
           this.currentIndex--;
-          this.scrollX += 112;
+          this.scrollX += 276;
         }
       }
     },
@@ -205,43 +191,55 @@ export default {
       });
       this.sliderData = sliderTemplatesArray;
       this.isTemplatesClick = true;
-      // console.log("sliderObj", sliderObj);
-      // console.log("DATA", data);
-      // this.$emit("handleCard", data.name, this.name);
-      // console.log("handleCard", data.name, this.name);
     },
     handleKeyEvent(e) {
       window.alert(e.target);
     },
     handleScrollEvent() {
-      // to acess the slider container
-      const sliderContainer = this.$refs.sliderContainer;
-      // to get scroll position
+      // Access the slider container
+      const sliderContainer = this.$refs[`${this.name}-sliderContainer`];
+
+      // Get scroll position
       const scrollPosition = sliderContainer.scrollLeft;
-      // total width of sliderContainer
+
+      // Total width of sliderContainer
       const totalWidth = sliderContainer.scrollWidth;
-      // width of slider card
+
+      // Width of slider card
       const containerWidth = sliderContainer.offsetWidth;
 
-      // to check how much card scroll in percentage
-      const scrollPercentage =
-        (scrollPosition / (totalWidth - containerWidth)) * 100;
+      // Calculate the width of each card
+      const cardWidth = totalWidth / this.sliderData.length;
 
-      // to calculate card width
-      const cardWidth = 100 / this.slideToShow;
+      // Calculate the number of pending cards to the right
+      let actualWidth = totalWidth - containerWidth - scrollPosition;
+      let pendingCards = Math.floor(actualWidth / cardWidth);
 
-      const scrolledSlides = Math.floor(scrollPercentage / cardWidth) / 2;
+      let num = pendingCards;
+      // [Violation] Forced reflow while executing JavaScript took 78ms
 
-      this.leftSlideCount = scrolledSlides;
+      setTimeout(() => {
+        this.rightSlideCount = num;
+      }, 270);
       this.leftSliderClick = true;
-      //scrolledSlides means how much slides are scroll
-      this.rightSlideCount = Math.floor(
-        this.sliderArray.length - this.slideToShow - scrolledSlides
-      );
+      // this.rightSlideCount = pendingCards;
+
+      console.log("pendingCards", num);
     },
 
-    sliderSrc(data) {
-      console.log("DATA", data);
+    childFunction(data) {
+      let cardsToShow = this.$store.state.inspirationArray.find(
+        (card) => card._id === data
+      );
+
+      this.sliderData = cardsToShow.templates.map((data) => {
+        return {
+          thumbnail: data.image,
+          _id: data.title,
+          count: data.countOfCommands,
+          id: data._id,
+        };
+      });
     },
   },
 };
@@ -252,6 +250,7 @@ export default {
   width: 100%;
   position: relative;
   margin: 0 auto;
+  transition: all 0.8s ease-in-out !important;
 }
 .slider {
   width: 100%;
@@ -260,14 +259,13 @@ export default {
   cursor: pointer;
   display: flex;
   align-items: center;
+  justify-content: space-between;
   flex-wrap: nowrap;
-  gap: 3rem;
-
+  gap: 1.72rem;
   overflow-x: scroll;
   scroll-snap-type: x mandatory;
   scroll-behavior: smooth;
   -webkit-overflow-scrolling: touch;
-  transition: all 0.8s ease-in-out;
 
   &::-webkit-scrollbar {
     width: 0;
@@ -275,9 +273,8 @@ export default {
   }
 
   &_items {
-    flex: 0 0 18%;
+    flex: 0 0 19%;
     position: relative;
-    transition: all 0.8s ease-in-out;
     scroll-snap-align: end;
 
     &-images {
@@ -356,14 +353,14 @@ export default {
     position: absolute;
     top: 50%;
     left: 0;
-    transform: translate(-50%, -100%);
+    transform: translate(-50%, -50%);
     z-index: 999;
   }
   &_right-btn {
     position: absolute;
     top: 50%;
     right: 0;
-    transform: translate(0, -100%);
+    transform: translate(50%, -50%);
     z-index: 999;
   }
 }

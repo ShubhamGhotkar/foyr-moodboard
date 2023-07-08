@@ -32,7 +32,7 @@ import accountIcon from "../assets/icons/account-icon.svg";
 import folderIcon from "../assets/icons/folder-icon.svg";
 import templatesIcon from "../assets/icons/templates-icon.svg";
 import tutorialIcon from "../assets/icons/tutorial-icon.svg";
-console.log(Dashboard);
+// console.log(Dashboard);
 export default {
   data() {
     return {

@@ -23,7 +23,7 @@
           </div>
         </div>
         <!-- MOODBOARD TEMPLATES -->
-        <div v-if="moodboardData.length === 0">
+        <div v-if="this.$store.state.moodboardArray.length === 0">
           <h3 class="header-2 moodboard-heading">MoodBoards</h3>
           <div class="moodboard">
             <div class="moodboard_imgs">
@@ -49,34 +49,33 @@
           </div>
           <div class="cardSlider-container">
             <CardSlider
-              :sliderArray="moodboardData"
+              :sliderArray="this.$store.state.moodboardArray"
               name="moodBoard"
-              @handleCard="handleStyleClick"
             />
           </div>
         </div>
 
         <!-- STYLE CONTAINER -->
         <div>
-          <div class="style_container-btn">
-            <h3 class="header-2">Style</h3>
+          <div class="style_container-btn p-1">
+            <h3 class="style_container-btn-tittle header-2">Style</h3>
             <div class="style_container-btn-container">
               <button
-                v-for="button in styleCardArray"
-                :key="button.name + Math.random()"
+                v-for="button in this.$store.state.inspirationArray"
+                :key="button._id + Math.random()"
                 class="style-btn"
-                @click="() => handleStyleClick(button.name, `styleSlider`)"
+                @click="handleButtonClick(button._id)"
               >
-                {{ button.name }}
+                {{ button._id }}
               </button>
             </div>
-            <p class="see-all">See all</p>
+            <p class="style_container-btn-seeAll see-all">See all</p>
           </div>
           <div class="cardSlider-container">
             <CardSlider
-              :sliderArray="inspirationData"
+              :sliderArray="this.$store.state.inspirationArray"
               name="styleSlider"
-              @handleCard="handleStyleClick"
+              ref="styleSliderChild"
             />
           </div>
         </div>
@@ -88,9 +87,8 @@
           </div>
           <div class="cardSlider-container">
             <CardSlider
-              :sliderArray="roomArray"
+              :sliderArray="this.$store.state.roomArray"
               name="roomSlider"
-              @handleCard="handleStyleClick"
             />
           </div>
         </div>
@@ -102,673 +100,22 @@
 <script>
 import SideBar from "@/components/SideBar.vue";
 import CardSlider from "@/components/CardSlider.vue";
-import { roomData, inspirationTypeData } from "../data/demoData";
-import { moodboardData } from "../data/moodboardData";
-
-import uniqid from "uniqid";
 
 export default {
-  created() {
-    this.styleCardSliders = this.styleCardArray;
-    this.roomCardSliders = this.roomCardArray;
-    this.roomArray = roomData;
-    this.inspirationData = inspirationTypeData;
-    this.moodboardData = moodboardData.map((data) => {
-      return {
-        _id: data.name,
-        src: data.properties.thumbnail,
-        count: data.countOfCommands,
-        id: data.accountId,
-      };
-    });
-    console.log("moodboardData", moodboardData);
+  created() {},
+  data() {
+    return {
+      // buttonClickText: "",
+    };
   },
   components: {
     SideBar,
     CardSlider,
   },
-  data() {
-    return {
-      styleCardArray: [
-        {
-          name: "Minimilist",
-          item: 10,
-          id: uniqid(),
-          src: `https://images.unsplash.com/photo-1571898223382-0aa3499f0f2a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDJ8TThqVmJMYlRSd3N8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=60`,
-          templatesList: [
-            {
-              name: "Minimilist",
-              src: "https://images.unsplash.com/photo-1571898223382-0aa3499f0f2a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDJ8TThqVmJMYlRSd3N8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=60",
-              item: 10,
-            },
-            {
-              name: "Minimilist",
-              src: "https://images.unsplash.com/photo-1571898223382-0aa3499f0f2a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDJ8TThqVmJMYlRSd3N8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=60",
-              item: 10,
-            },
-            {
-              name: "Minimilist",
-              src: "https://images.unsplash.com/photo-1571898223382-0aa3499f0f2a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDJ8TThqVmJMYlRSd3N8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=60",
-              item: 10,
-            },
-            {
-              name: "Minimilist",
-              src: "https://images.unsplash.com/photo-1571898223382-0aa3499f0f2a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDJ8TThqVmJMYlRSd3N8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=60",
-              item: 10,
-            },
-            {
-              name: "Minimilist",
-              src: "https://images.unsplash.com/photo-1571898223382-0aa3499f0f2a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDJ8TThqVmJMYlRSd3N8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=60",
-              item: 10,
-            },
-            {
-              name: "Minimilist",
-              src: "https://images.unsplash.com/photo-1571898223382-0aa3499f0f2a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDJ8TThqVmJMYlRSd3N8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=60",
-              item: 10,
-            },
-            {
-              name: "Minimilist",
-              src: "https://images.unsplash.com/photo-1571898223382-0aa3499f0f2a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDJ8TThqVmJMYlRSd3N8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=60",
-              item: 10,
-            },
-          ],
-        },
-        {
-          name: "Exlectic",
-          item: 10,
-          id: uniqid(),
-          src: `https://plus.unsplash.com/premium_photo-1664699099351-4364a337288c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDZ8TThqVmJMYlRSd3N8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=60`,
-          templatesList: [
-            {
-              name: "Exlectic",
-              src: `https://plus.unsplash.com/premium_photo-1664699099351-4364a337288c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDZ8TThqVmJMYlRSd3N8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=60`,
-              item: 10,
-            },
-            {
-              name: "Exlectic",
-              src: `https://plus.unsplash.com/premium_photo-1664699099351-4364a337288c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDZ8TThqVmJMYlRSd3N8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=60`,
-              item: 10,
-            },
-            {
-              name: "Exlectic",
-              src: `https://plus.unsplash.com/premium_photo-1664699099351-4364a337288c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDZ8TThqVmJMYlRSd3N8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=60`,
-              item: 10,
-            },
-            {
-              name: "Exlectic",
-              src: `https://plus.unsplash.com/premium_photo-1664699099351-4364a337288c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDZ8TThqVmJMYlRSd3N8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=60`,
-              item: 10,
-            },
-            {
-              name: "Exlectic",
-              src: `https://plus.unsplash.com/premium_photo-1664699099351-4364a337288c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDZ8TThqVmJMYlRSd3N8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=60`,
-              item: 10,
-            },
-            {
-              name: "Exlectic",
-              src: `https://plus.unsplash.com/premium_photo-1664699099351-4364a337288c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDZ8TThqVmJMYlRSd3N8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=60`,
-              item: 10,
-            },
-            {
-              name: "Exlectic",
-              src: `https://plus.unsplash.com/premium_photo-1664699099351-4364a337288c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDZ8TThqVmJMYlRSd3N8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=60`,
-              item: 10,
-            },
-          ],
-        },
-        {
-          name: "Japandi",
-          item: 10,
-          id: uniqid(),
-          src: `https://images.unsplash.com/photo-1685790474502-fa665337538c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDd8TThqVmJMYlRSd3N8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=60`,
-          templatesList: [
-            {
-              name: "Japandi",
-              src: `https://images.unsplash.com/photo-1685790474502-fa665337538c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDd8TThqVmJMYlRSd3N8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=60`,
-              item: 10,
-            },
-            {
-              name: "Japandi",
-              src: `https://images.unsplash.com/photo-1685790474502-fa665337538c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDd8TThqVmJMYlRSd3N8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=60`,
-              item: 10,
-            },
-            {
-              name: "Japandi",
-              src: `https://images.unsplash.com/photo-1685790474502-fa665337538c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDd8TThqVmJMYlRSd3N8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=60`,
-              item: 10,
-            },
-            {
-              name: "Japandi",
-              src: `https://images.unsplash.com/photo-1685790474502-fa665337538c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDd8TThqVmJMYlRSd3N8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=60`,
-              item: 10,
-            },
-            {
-              name: "Japandi",
-              src: `https://images.unsplash.com/photo-1685790474502-fa665337538c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDd8TThqVmJMYlRSd3N8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=60`,
-              item: 10,
-            },
-            {
-              name: "Japandi",
-              src: `https://images.unsplash.com/photo-1685790474502-fa665337538c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDd8TThqVmJMYlRSd3N8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=60`,
-              item: 10,
-            },
-            {
-              name: "Japandi",
-              src: `https://images.unsplash.com/photo-1685790474502-fa665337538c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDd8TThqVmJMYlRSd3N8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=60`,
-              item: 10,
-            },
-          ],
-        },
-        {
-          name: "Bohemian",
-          item: 10,
-          id: uniqid(),
-          src: `https://images.unsplash.com/photo-1532103054090-3491f1a05d0d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDEzfE04alZiTGJUUndzfHxlbnwwfHx8fHw%3D&auto=format&fit=crop&w=500&q=60`,
-          templatesList: [
-            {
-              name: "Bohemian",
-              src: `https://images.unsplash.com/photo-1532103054090-3491f1a05d0d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDEzfE04alZiTGJUUndzfHxlbnwwfHx8fHw%3D&auto=format&fit=crop&w=500&q=60`,
-              item: 10,
-            },
-            {
-              name: "Bohemian",
-              src: `https://images.unsplash.com/photo-1532103054090-3491f1a05d0d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDEzfE04alZiTGJUUndzfHxlbnwwfHx8fHw%3D&auto=format&fit=crop&w=500&q=60`,
-              item: 10,
-            },
-            {
-              name: "Bohemian",
-              src: `https://images.unsplash.com/photo-1532103054090-3491f1a05d0d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDEzfE04alZiTGJUUndzfHxlbnwwfHx8fHw%3D&auto=format&fit=crop&w=500&q=60`,
-              item: 10,
-            },
-            {
-              name: "Bohemian",
-              src: `https://images.unsplash.com/photo-1532103054090-3491f1a05d0d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDEzfE04alZiTGJUUndzfHxlbnwwfHx8fHw%3D&auto=format&fit=crop&w=500&q=60`,
-              item: 10,
-            },
-            {
-              name: "Bohemian",
-              src: `https://images.unsplash.com/photo-1532103054090-3491f1a05d0d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDEzfE04alZiTGJUUndzfHxlbnwwfHx8fHw%3D&auto=format&fit=crop&w=500&q=60`,
-              item: 10,
-            },
-            {
-              name: "Bohemian",
-              src: `https://images.unsplash.com/photo-1532103054090-3491f1a05d0d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDEzfE04alZiTGJUUndzfHxlbnwwfHx8fHw%3D&auto=format&fit=crop&w=500&q=60`,
-              item: 10,
-            },
-            {
-              name: "Bohemian",
-              src: `https://images.unsplash.com/photo-1532103054090-3491f1a05d0d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDEzfE04alZiTGJUUndzfHxlbnwwfHx8fHw%3D&auto=format&fit=crop&w=500&q=60`,
-              item: 10,
-            },
-          ],
-        },
-        {
-          name: "Mid-Century",
-          item: 10,
-          id: uniqid(),
-          src: `https://images.unsplash.com/photo-1685475512320-eede8aea2b95?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDIxfE04alZiTGJUUndzfHxlbnwwfHx8fHw%3D&auto=format&fit=crop&w=500&q=60`,
-          templatesList: [
-            {
-              name: "Mid-Century",
-              src: `https://images.unsplash.com/photo-1685475512320-eede8aea2b95?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDIxfE04alZiTGJUUndzfHxlbnwwfHx8fHw%3D&auto=format&fit=crop&w=500&q=60`,
-              item: 10,
-            },
-            {
-              name: "Mid-Century",
-              src: `https://images.unsplash.com/photo-1685475512320-eede8aea2b95?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDIxfE04alZiTGJUUndzfHxlbnwwfHx8fHw%3D&auto=format&fit=crop&w=500&q=60`,
-              item: 10,
-            },
-            {
-              name: "Mid-Century",
-              src: `https://images.unsplash.com/photo-1685475512320-eede8aea2b95?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDIxfE04alZiTGJUUndzfHxlbnwwfHx8fHw%3D&auto=format&fit=crop&w=500&q=60`,
-              item: 10,
-            },
-            {
-              name: "Mid-Century",
-              src: `https://images.unsplash.com/photo-1685475512320-eede8aea2b95?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDIxfE04alZiTGJUUndzfHxlbnwwfHx8fHw%3D&auto=format&fit=crop&w=500&q=60`,
-              item: 10,
-            },
-            {
-              name: "Mid-Century",
-              src: `https://images.unsplash.com/photo-1685475512320-eede8aea2b95?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDIxfE04alZiTGJUUndzfHxlbnwwfHx8fHw%3D&auto=format&fit=crop&w=500&q=60`,
-              item: 10,
-            },
-            {
-              name: "Mid-Century",
-              src: `https://images.unsplash.com/photo-1685475512320-eede8aea2b95?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDIxfE04alZiTGJUUndzfHxlbnwwfHx8fHw%3D&auto=format&fit=crop&w=500&q=60`,
-              item: 10,
-            },
-            {
-              name: "Mid-Century",
-              src: `https://images.unsplash.com/photo-1685475512320-eede8aea2b95?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDIxfE04alZiTGJUUndzfHxlbnwwfHx8fHw%3D&auto=format&fit=crop&w=500&q=60`,
-              item: 10,
-            },
-          ],
-        },
-        {
-          name: "Rustic",
-          item: 10,
-          id: uniqid(),
-          src: `https://images.unsplash.com/photo-1547057560-0180a6521dfa?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDI1fE04alZiTGJUUndzfHxlbnwwfHx8fHw%3D&auto=format&fit=crop&w=500&q=60`,
-          templatesList: [
-            {
-              name: "Rustic",
-              src: `https://images.unsplash.com/photo-1547057560-0180a6521dfa?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDI1fE04alZiTGJUUndzfHxlbnwwfHx8fHw%3D&auto=format&fit=crop&w=500&q=60`,
-              item: 10,
-            },
-            {
-              name: "Rustic",
-              src: `https://images.unsplash.com/photo-1547057560-0180a6521dfa?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDI1fE04alZiTGJUUndzfHxlbnwwfHx8fHw%3D&auto=format&fit=crop&w=500&q=60`,
-              item: 10,
-            },
-            {
-              name: "Rustic",
-              src: `https://images.unsplash.com/photo-1547057560-0180a6521dfa?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDI1fE04alZiTGJUUndzfHxlbnwwfHx8fHw%3D&auto=format&fit=crop&w=500&q=60`,
-              item: 10,
-            },
-            {
-              name: "Rustic",
-              src: `https://images.unsplash.com/photo-1547057560-0180a6521dfa?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDI1fE04alZiTGJUUndzfHxlbnwwfHx8fHw%3D&auto=format&fit=crop&w=500&q=60`,
-              item: 10,
-            },
-            {
-              name: "Rustic",
-              src: `https://images.unsplash.com/photo-1547057560-0180a6521dfa?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDI1fE04alZiTGJUUndzfHxlbnwwfHx8fHw%3D&auto=format&fit=crop&w=500&q=60`,
-              item: 10,
-            },
-            {
-              name: "Rustic",
-              src: `https://images.unsplash.com/photo-1547057560-0180a6521dfa?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDI1fE04alZiTGJUUndzfHxlbnwwfHx8fHw%3D&auto=format&fit=crop&w=500&q=60`,
-              item: 10,
-            },
-            {
-              name: "Rustic",
-              src: `https://images.unsplash.com/photo-1547057560-0180a6521dfa?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDI1fE04alZiTGJUUndzfHxlbnwwfHx8fHw%3D&auto=format&fit=crop&w=500&q=60`,
-              item: 10,
-            },
-          ],
-        },
-        {
-          name: "Transitional",
-          item: 10,
-          id: uniqid(),
-          src: `https://images.unsplash.com/photo-1686943812586-65d1d30ab40f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDI4fE04alZiTGJUUndzfHxlbnwwfHx8fHw%3D&auto=format&fit=crop&w=500&q=60`,
-          templatesList: [
-            {
-              name: "Transitional",
-              src: `https://images.unsplash.com/photo-1686943812586-65d1d30ab40f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDI4fE04alZiTGJUUndzfHxlbnwwfHx8fHw%3D&auto=format&fit=crop&w=500&q=60`,
-              item: 10,
-            },
-            {
-              name: "Transitional",
-              src: `https://images.unsplash.com/photo-1686943812586-65d1d30ab40f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDI4fE04alZiTGJUUndzfHxlbnwwfHx8fHw%3D&auto=format&fit=crop&w=500&q=60`,
-              item: 10,
-            },
-            {
-              name: "Transitional",
-              src: `https://images.unsplash.com/photo-1686943812586-65d1d30ab40f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDI4fE04alZiTGJUUndzfHxlbnwwfHx8fHw%3D&auto=format&fit=crop&w=500&q=60`,
-              item: 10,
-            },
-            {
-              name: "Transitional",
-              src: `https://images.unsplash.com/photo-1686943812586-65d1d30ab40f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDI4fE04alZiTGJUUndzfHxlbnwwfHx8fHw%3D&auto=format&fit=crop&w=500&q=60`,
-              item: 10,
-            },
-            {
-              name: "Transitional",
-              src: `https://images.unsplash.com/photo-1686943812586-65d1d30ab40f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDI4fE04alZiTGJUUndzfHxlbnwwfHx8fHw%3D&auto=format&fit=crop&w=500&q=60`,
-              item: 10,
-            },
-            {
-              name: "Transitional",
-              src: `https://images.unsplash.com/photo-1686943812586-65d1d30ab40f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDI4fE04alZiTGJUUndzfHxlbnwwfHx8fHw%3D&auto=format&fit=crop&w=500&q=60`,
-              item: 10,
-            },
-            {
-              name: "Transitional",
-              src: `https://images.unsplash.com/photo-1686943812586-65d1d30ab40f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDI4fE04alZiTGJUUndzfHxlbnwwfHx8fHw%3D&auto=format&fit=crop&w=500&q=60`,
-              item: 10,
-            },
-          ],
-        },
-      ],
-      roomCardArray: [
-        {
-          name: "room Templates 1",
-          item: 10,
-          id: uniqid(),
-          src: `https://images.unsplash.com/photo-1687851711955-156c984e7f71?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDl8aVVJc25WdGpCMFl8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=60`,
-          templatesList: [
-            {
-              name: "room Templates 1",
-              src: `https://images.unsplash.com/photo-1687851711955-156c984e7f71?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDl8aVVJc25WdGpCMFl8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=60`,
-              item: 10,
-            },
-            {
-              name: "room Templates 1",
-              src: `https://images.unsplash.com/photo-1687851711955-156c984e7f71?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDl8aVVJc25WdGpCMFl8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=60`,
-              item: 10,
-            },
-            {
-              name: "room Templates 1",
-              src: `https://images.unsplash.com/photo-1687851711955-156c984e7f71?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDl8aVVJc25WdGpCMFl8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=60`,
-              item: 10,
-            },
-            {
-              name: "room Templates 1",
-              src: `https://images.unsplash.com/photo-1687851711955-156c984e7f71?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDl8aVVJc25WdGpCMFl8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=60`,
-              item: 10,
-            },
-            {
-              name: "room Templates 1",
-              src: `https://images.unsplash.com/photo-1687851711955-156c984e7f71?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDl8aVVJc25WdGpCMFl8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=60`,
-              item: 10,
-            },
-            {
-              name: "room Templates 1",
-              src: `https://images.unsplash.com/photo-1687851711955-156c984e7f71?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDl8aVVJc25WdGpCMFl8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=60`,
-              item: 10,
-            },
-            {
-              name: "room Templates 1",
-              src: "https://images.unsplash.com/photo-1571898223382-0aa3499f0f2a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDJ8TThqVmJMYlRSd3N8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=60",
-              item: 10,
-            },
-          ],
-        },
-        {
-          name: "room Templates 2",
-          item: 10,
-          id: uniqid(),
-          src: `https://images.unsplash.com/photo-1688435527195-a74720ee6da7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDE1fGlVSXNuVnRqQjBZfHxlbnwwfHx8fHw%3D&auto=format&fit=crop&w=500&q=60`,
-          templatesList: [
-            {
-              name: "templates2",
-              src: `https://images.unsplash.com/photo-1688435527195-a74720ee6da7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDE1fGlVSXNuVnRqQjBZfHxlbnwwfHx8fHw%3D&auto=format&fit=crop&w=500&q=60`,
-              item: 10,
-            },
-            {
-              name: "templates2",
-              src: `https://images.unsplash.com/photo-1688435527195-a74720ee6da7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDE1fGlVSXNuVnRqQjBZfHxlbnwwfHx8fHw%3D&auto=format&fit=crop&w=500&q=60`,
-              item: 10,
-            },
-            {
-              name: "templates2",
-              src: `https://images.unsplash.com/photo-1688435527195-a74720ee6da7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDE1fGlVSXNuVnRqQjBZfHxlbnwwfHx8fHw%3D&auto=format&fit=crop&w=500&q=60`,
-              item: 10,
-            },
-            {
-              name: "templates2",
-              src: `https://images.unsplash.com/photo-1688435527195-a74720ee6da7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDE1fGlVSXNuVnRqQjBZfHxlbnwwfHx8fHw%3D&auto=format&fit=crop&w=500&q=60`,
-              item: 10,
-            },
-            {
-              name: "templates2",
-              src: `https://images.unsplash.com/photo-1688435527195-a74720ee6da7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDE1fGlVSXNuVnRqQjBZfHxlbnwwfHx8fHw%3D&auto=format&fit=crop&w=500&q=60`,
-              item: 10,
-            },
-            {
-              name: "templates2",
-              src: `https://images.unsplash.com/photo-1688435527195-a74720ee6da7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDE1fGlVSXNuVnRqQjBZfHxlbnwwfHx8fHw%3D&auto=format&fit=crop&w=500&q=60`,
-              item: 10,
-            },
-            {
-              name: "templates2",
-              src: `https://images.unsplash.com/photo-1688435527195-a74720ee6da7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDE1fGlVSXNuVnRqQjBZfHxlbnwwfHx8fHw%3D&auto=format&fit=crop&w=500&q=60`,
-              item: 10,
-            },
-          ],
-        },
-        {
-          name: "room Templates 3",
-          item: 10,
-          id: uniqid(),
-          src: `https://images.unsplash.com/photo-1687822397910-e7b0b016cf7a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDh8aVVJc25WdGpCMFl8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=60`,
-          templatesList: [
-            {
-              name: "templates3",
-              src: `https://images.unsplash.com/photo-1687822397910-e7b0b016cf7a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDh8aVVJc25WdGpCMFl8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=60`,
-              item: 10,
-            },
-            {
-              name: "templates3",
-              src: `https://images.unsplash.com/photo-1687822397910-e7b0b016cf7a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDh8aVVJc25WdGpCMFl8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=60`,
-              item: 10,
-            },
-            {
-              name: "templates3",
-              src: `https://images.unsplash.com/photo-1687822397910-e7b0b016cf7a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDh8aVVJc25WdGpCMFl8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=60`,
-              item: 10,
-            },
-            {
-              name: "templates3",
-              src: `https://images.unsplash.com/photo-1687822397910-e7b0b016cf7a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDh8aVVJc25WdGpCMFl8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=60`,
-              item: 10,
-            },
-            {
-              name: "templates3",
-              src: `https://images.unsplash.com/photo-1687822397910-e7b0b016cf7a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDh8aVVJc25WdGpCMFl8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=60`,
-              item: 10,
-            },
-            {
-              name: "templates3",
-              src: `https://images.unsplash.com/photo-1687822397910-e7b0b016cf7a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDh8aVVJc25WdGpCMFl8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=60`,
-              item: 10,
-            },
-            {
-              name: "templates3",
-              src: `https://images.unsplash.com/photo-1687822397910-e7b0b016cf7a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDh8aVVJc25WdGpCMFl8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=60`,
-              item: 10,
-            },
-          ],
-        },
-        {
-          name: "room Templates 4",
-          item: 10,
-          id: uniqid(),
-          src: `https://images.unsplash.com/photo-1687912089861-9d208efd7d5c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDMzfGlVSXNuVnRqQjBZfHxlbnwwfHx8fHw%3D&auto=format&fit=crop&w=500&q=60`,
-          templatesList: [
-            {
-              name: "templates4",
-              src: `https://images.unsplash.com/photo-1687912089861-9d208efd7d5c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDMzfGlVSXNuVnRqQjBZfHxlbnwwfHx8fHw%3D&auto=format&fit=crop&w=500&q=60`,
-              item: 10,
-            },
-            {
-              name: "templates4",
-              src: `https://images.unsplash.com/photo-1687912089861-9d208efd7d5c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDMzfGlVSXNuVnRqQjBZfHxlbnwwfHx8fHw%3D&auto=format&fit=crop&w=500&q=60`,
-              item: 10,
-            },
-            {
-              name: "templates4",
-              src: `https://images.unsplash.com/photo-1687912089861-9d208efd7d5c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDMzfGlVSXNuVnRqQjBZfHxlbnwwfHx8fHw%3D&auto=format&fit=crop&w=500&q=60`,
-              item: 10,
-            },
-            {
-              name: "templates4",
-              src: `https://images.unsplash.com/photo-1687912089861-9d208efd7d5c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDMzfGlVSXNuVnRqQjBZfHxlbnwwfHx8fHw%3D&auto=format&fit=crop&w=500&q=60`,
-              item: 10,
-            },
-            {
-              name: "templates4",
-              src: `https://images.unsplash.com/photo-1687912089861-9d208efd7d5c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDMzfGlVSXNuVnRqQjBZfHxlbnwwfHx8fHw%3D&auto=format&fit=crop&w=500&q=60`,
-              item: 10,
-            },
-            {
-              name: "templates4",
-              src: `https://images.unsplash.com/photo-1687912089861-9d208efd7d5c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDMzfGlVSXNuVnRqQjBZfHxlbnwwfHx8fHw%3D&auto=format&fit=crop&w=500&q=60`,
-              item: 10,
-            },
-            {
-              name: "templates4",
-              src: `https://images.unsplash.com/photo-1687912089861-9d208efd7d5c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDMzfGlVSXNuVnRqQjBZfHxlbnwwfHx8fHw%3D&auto=format&fit=crop&w=500&q=60`,
-              item: 10,
-            },
-          ],
-        },
-        {
-          name: "room Templates 5",
-          item: 10,
-          id: uniqid(),
-          src: `https://images.unsplash.com/photo-1685113227373-37eceacc5985?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDMyfGlVSXNuVnRqQjBZfHxlbnwwfHx8fHw%3D&auto=format&fit=crop&w=500&q=60`,
-          templatesList: [
-            {
-              name: "templates5",
-              src: `https://images.unsplash.com/photo-1685113227373-37eceacc5985?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDMyfGlVSXNuVnRqQjBZfHxlbnwwfHx8fHw%3D&auto=format&fit=crop&w=500&q=60`,
-              item: 10,
-            },
-            {
-              name: "templates5",
-              src: `https://images.unsplash.com/photo-1685113227373-37eceacc5985?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDMyfGlVSXNuVnRqQjBZfHxlbnwwfHx8fHw%3D&auto=format&fit=crop&w=500&q=60`,
-              item: 10,
-            },
-            {
-              name: "templates5",
-              src: `https://images.unsplash.com/photo-1685113227373-37eceacc5985?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDMyfGlVSXNuVnRqQjBZfHxlbnwwfHx8fHw%3D&auto=format&fit=crop&w=500&q=60`,
-              item: 10,
-            },
-            {
-              name: "templates5",
-              src: `https://images.unsplash.com/photo-1685113227373-37eceacc5985?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDMyfGlVSXNuVnRqQjBZfHxlbnwwfHx8fHw%3D&auto=format&fit=crop&w=500&q=60`,
-              item: 10,
-            },
-            {
-              name: "templates5",
-              src: `https://images.unsplash.com/photo-1685113227373-37eceacc5985?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDMyfGlVSXNuVnRqQjBZfHxlbnwwfHx8fHw%3D&auto=format&fit=crop&w=500&q=60`,
-              item: 10,
-            },
-            {
-              name: "templates5",
-              src: `https://images.unsplash.com/photo-1685113227373-37eceacc5985?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDMyfGlVSXNuVnRqQjBZfHxlbnwwfHx8fHw%3D&auto=format&fit=crop&w=500&q=60`,
-              item: 10,
-            },
-            {
-              name: "templates5",
-              src: `https://images.unsplash.com/photo-1685113227373-37eceacc5985?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDMyfGlVSXNuVnRqQjBZfHxlbnwwfHx8fHw%3D&auto=format&fit=crop&w=500&q=60`,
-              item: 10,
-            },
-          ],
-        },
-        {
-          name: "room Templates 6",
-          item: 10,
-          id: uniqid(),
-          src: `https://images.unsplash.com/photo-1687761478797-4c178d4289de?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDM4fGlVSXNuVnRqQjBZfHxlbnwwfHx8fHw%3D&auto=format&fit=crop&w=500&q=60`,
-          templatesList: [
-            {
-              name: "templates6",
-              src: `https://images.unsplash.com/photo-1687761478797-4c178d4289de?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDM4fGlVSXNuVnRqQjBZfHxlbnwwfHx8fHw%3D&auto=format&fit=crop&w=500&q=60`,
-              item: 10,
-            },
-            {
-              name: "templates6",
-              src: `https://images.unsplash.com/photo-1687761478797-4c178d4289de?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDM4fGlVSXNuVnRqQjBZfHxlbnwwfHx8fHw%3D&auto=format&fit=crop&w=500&q=60`,
-              item: 10,
-            },
-            {
-              name: "templates6",
-              src: `https://images.unsplash.com/photo-1687761478797-4c178d4289de?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDM4fGlVSXNuVnRqQjBZfHxlbnwwfHx8fHw%3D&auto=format&fit=crop&w=500&q=60`,
-              item: 10,
-            },
-            {
-              name: "templates6",
-              src: `https://images.unsplash.com/photo-1687761478797-4c178d4289de?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDM4fGlVSXNuVnRqQjBZfHxlbnwwfHx8fHw%3D&auto=format&fit=crop&w=500&q=60`,
-              item: 10,
-            },
-            {
-              name: "templates6",
-              src: `https://images.unsplash.com/photo-1687761478797-4c178d4289de?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDM4fGlVSXNuVnRqQjBZfHxlbnwwfHx8fHw%3D&auto=format&fit=crop&w=500&q=60`,
-              item: 10,
-            },
-            {
-              name: "templates6",
-              src: `https://images.unsplash.com/photo-1687761478797-4c178d4289de?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDM4fGlVSXNuVnRqQjBZfHxlbnwwfHx8fHw%3D&auto=format&fit=crop&w=500&q=60`,
-              item: 10,
-            },
-            {
-              name: "templates6",
-              src: `https://images.unsplash.com/photo-1687761478797-4c178d4289de?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDM4fGlVSXNuVnRqQjBZfHxlbnwwfHx8fHw%3D&auto=format&fit=crop&w=500&q=60`,
-              item: 10,
-            },
-          ],
-        },
-        {
-          name: "room Templates 7",
-          item: 10,
-          id: uniqid(),
-          src: `https://images.unsplash.com/photo-1688208092684-6400730f325f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDQ5fGlVSXNuVnRqQjBZfHxlbnwwfHx8fHw%3D&auto=format&fit=crop&w=500&q=60`,
-          templatesList: [
-            {
-              name: "templates7",
-              src: `https://images.unsplash.com/photo-1688208092684-6400730f325f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDQ5fGlVSXNuVnRqQjBZfHxlbnwwfHx8fHw%3D&auto=format&fit=crop&w=500&q=60`,
-              item: 10,
-            },
-            {
-              name: "templates7",
-              src: `https://images.unsplash.com/photo-1688208092684-6400730f325f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDQ5fGlVSXNuVnRqQjBZfHxlbnwwfHx8fHw%3D&auto=format&fit=crop&w=500&q=60`,
-              item: 10,
-            },
-            {
-              name: "templates7",
-              src: `https://images.unsplash.com/photo-1688208092684-6400730f325f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDQ5fGlVSXNuVnRqQjBZfHxlbnwwfHx8fHw%3D&auto=format&fit=crop&w=500&q=60`,
-              item: 10,
-            },
-            {
-              name: "templates7",
-              src: `https://images.unsplash.com/photo-1688208092684-6400730f325f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDQ5fGlVSXNuVnRqQjBZfHxlbnwwfHx8fHw%3D&auto=format&fit=crop&w=500&q=60`,
-              item: 10,
-            },
-            {
-              name: "templates7",
-              src: `https://images.unsplash.com/photo-1688208092684-6400730f325f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDQ5fGlVSXNuVnRqQjBZfHxlbnwwfHx8fHw%3D&auto=format&fit=crop&w=500&q=60`,
-              item: 10,
-            },
-            {
-              name: "templates7",
-              src: `https://images.unsplash.com/photo-1688208092684-6400730f325f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDQ5fGlVSXNuVnRqQjBZfHxlbnwwfHx8fHw%3D&auto=format&fit=crop&w=500&q=60`,
-              item: 10,
-            },
-            {
-              name: "templates7",
-              src: `https://images.unsplash.com/photo-1688208092684-6400730f325f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDQ5fGlVSXNuVnRqQjBZfHxlbnwwfHx8fHw%3D&auto=format&fit=crop&w=500&q=60`,
-              item: 10,
-            },
-          ],
-        },
-      ],
-      styleButton: [
-        "Minimilist",
-        "Eclectic",
-        "Japandi",
-        "Bohemian",
-        "Mid-Century",
-        "Rustic",
-        "Transitional",
-      ],
-      style: [
-        {
-          name: "minimilist",
-          id: "xyz",
-          templatesList: [],
-        },
-      ],
-      styleCardSliders: [],
-      roomCardSliders: [],
-      //  UPDATED CODE BELOW
-      roomArray: [],
-      inspirationData: [],
-      moodboardData: [],
-    };
-  },
+
   methods: {
-    handleStyleClick(data, name) {
-      if (name === "styleSlider") {
-        let cards = this.styleCardArray.find((card) => card.name === data);
-        this.styleCardSliders = cards.templatesList;
-      } else if (name === "roomSlider") {
-        let cards = this.roomCardArray.find((card) => card.name === data);
-        // console.log("CARDS", cards);
-        this.roomCardSliders = cards.templatesList;
-      }
+    handleButtonClick(data) {
+      this.$refs.styleSliderChild.childFunction(data);
     },
   },
 };
@@ -866,18 +213,27 @@ export default {
 /*STYLE BUTTON STYLE */
 .style_container-btn {
   width: 100%;
+  height: auto;
   height: fit-content;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: space-between;
   gap: 0.6rem;
 
   &-container {
+    flex: 0 0 90%;
     display: flex;
     align-items: center;
+    justify-content: flex-start;
+    flex-wrap: wrap;
     font-family: Montserrat;
     font-weight: 700;
-    gap: 1rem;
+    gap: 0.8rem;
+  }
+
+  &-tittle,
+  &-seeAll {
+    flex: 0 0 5%;
   }
 }
 

@@ -27,7 +27,11 @@
     </div>
     <div class="project" v-else>
       <div class="project_images">
-        <img :src="data.src" alt="project_img" class="project_images-img" />
+        <img
+          :src="data.properties.thumbnail"
+          alt="project_img"
+          class="project_images-img"
+        />
         <div class="project_images-blur">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -37,7 +41,7 @@
             fill="none"
             class="project_images-blur-likeBtn"
             @click="handleLike"
-            :style="{ 'likeBtn-active': isLikeClick }"
+            :style="{ 'likeBtn-active': isLikeCLick }"
           >
             <path
               d="M11.6707 4.81612C13.9185 2.798 17.3921 2.86499 19.5575 5.03429C21.722 7.20455 21.7967 10.6609 19.7834 12.9154L11.6688 21.0414L3.55617 12.9154C1.54284 10.6609 1.61843 7.19881 3.782 5.03429C5.94938 2.86786 9.41625 2.79513 11.6707 4.81612ZM18.2025 6.3864C16.7672 4.94913 14.4515 4.89075 12.9491 6.23999L11.6717 7.38636L10.3933 6.24095C8.88613 4.8898 6.5752 4.94913 5.13602 6.38831C3.71023 7.8141 3.63846 10.0963 4.95229 11.6044L11.6698 18.3324L18.3872 11.6054C19.702 10.0963 19.6303 7.81697 18.2025 6.3864Z"
@@ -82,7 +86,7 @@
           @click="handleEdit"
           v-else-if="!isEditing"
         >
-          <span v-text="data._id"></span>
+          <span v-text="data.name"></span>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="17"
@@ -143,7 +147,7 @@ export default {
     };
   },
   created() {
-    console.log("DATA", this.data);
+    // console.log("DATA", this.data);
   },
   methods: {
     handleEdit() {
@@ -183,7 +187,7 @@ export default {
 .project,
 .create_new {
   height: 15.8rem;
-  width: 22.8rem;
+  flex: 0 0 19%;
 
   border-radius: 1rem;
   border: 0.2rem solid #e8e8e8;

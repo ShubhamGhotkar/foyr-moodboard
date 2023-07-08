@@ -122,4 +122,8 @@ body {
 .lower-layel {
   z-index: 99 !important;
 }
+
+.p-1 {
+  padding-bottom: 1rem;
+}
 </style>
