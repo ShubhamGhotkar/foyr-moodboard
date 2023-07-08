@@ -2,7 +2,7 @@
   <section class="slider-section">
     <!-- FOR MOODBOARD CARDS -->
     <div
-      class="slider"
+      class="slider place-center"
       :ref="`${name}-sliderContainer`"
       @scroll="handleScrollEvent"
       v-if="name === `moodBoard`"
@@ -20,7 +20,7 @@
 
     <!-- FOR CARDS -->
     <div
-      class="slider"
+      class="slider place-center"
       :ref="`${name}-sliderContainer`"
       @scroll="handleScrollEvent"
       v-if="name !== 'moodBoard'"
@@ -69,6 +69,7 @@
       class="slider_left-btn arrow-btn"
       @click="handleSlider(`left`)"
       v-if="checkLeft"
+      :class="{ 'mt-2': name === 'moodBoard' }"
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -87,6 +88,7 @@
     </div>
     <div
       class="slider_right-btn arrow-btn"
+      :class="{ 'mt-2': name === 'moodBoard' }"
       @click="handleSlider(`right`)"
       v-if="checkRight"
     >
@@ -214,17 +216,15 @@ export default {
       // Calculate the number of pending cards to the right
       let actualWidth = totalWidth - containerWidth - scrollPosition;
       let pendingCards = Math.floor(actualWidth / cardWidth);
+      let totalCards = this.sliderData.length - this.slideToShow;
 
-      let num = pendingCards;
       // [Violation] Forced reflow while executing JavaScript took 78ms
 
       setTimeout(() => {
-        this.rightSlideCount = num;
+        this.rightSlideCount = pendingCards;
+        this.leftSlideCount = totalCards - pendingCards;
       }, 270);
       this.leftSliderClick = true;
-      // this.rightSlideCount = pendingCards;
-
-      console.log("pendingCards", num);
     },
 
     childFunction(data) {
@@ -257,9 +257,7 @@ export default {
   padding: 1rem 0;
   margin: 0 auto;
   cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+
   flex-wrap: nowrap;
   gap: 1.72rem;
   overflow-x: scroll;
@@ -322,7 +320,7 @@ export default {
           background-color: #fff;
           text-align: center;
           font-size: 1.2rem;
-          line-height: normal;
+
           font-weight: 500;
           &:hover {
             cursor: pointer;
@@ -353,14 +351,14 @@ export default {
     position: absolute;
     top: 50%;
     left: 0;
-    transform: translate(-50%, -50%);
+    transform: translate(-50%, -100%);
     z-index: 999;
   }
   &_right-btn {
     position: absolute;
     top: 50%;
     right: 0;
-    transform: translate(50%, -50%);
+    transform: translate(50%, -100%);
     z-index: 999;
   }
 }

@@ -53,6 +53,7 @@
               name="moodBoard"
             />
           </div>
+          <!-- <div class="moodboard-container-test"></div> -->
         </div>
 
         <!-- STYLE CONTAINER -->
@@ -124,7 +125,6 @@ export default {
 <style lang="scss" scoped>
 .cardSlider-container {
   width: 100%;
-  // margin: 0 auto;
 }
 .home-container {
   width: 100vw;
@@ -142,7 +142,6 @@ export default {
   min-height: 100vh;
   background-color: #fff;
   padding: 8.5rem 4.8rem 2.8rem 2.6rem;
-  // background: yellow;
 
   &-main {
     margin: 0 auto;
@@ -253,9 +252,7 @@ export default {
   color: #222021;
   margin: 0 3rem 0 auto;
   font-size: 1.4rem;
-  font-style: normal;
   font-weight: 700;
-  line-height: normal;
   cursor: pointer;
 }
 

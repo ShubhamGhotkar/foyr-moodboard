@@ -27,6 +27,8 @@ html {
 body {
   font-family: Montserrat;
   overflow-x: hidden !important;
+  font-style: normal;
+  line-height: normal;
 }
 
 #app {
@@ -125,5 +127,14 @@ body {
 
 .p-1 {
   padding-bottom: 1rem;
+}
+.mt-2 {
+  margin-top: 1.2rem;
+}
+/*COMMON CLASSES */
+.place-center {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 </style>

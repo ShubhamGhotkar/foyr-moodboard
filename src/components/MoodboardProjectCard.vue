@@ -86,7 +86,7 @@
           @click="handleEdit"
           v-else-if="!isEditing"
         >
-          <span v-text="data.name"></span>
+          <span v-text="projectTittle"></span>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="17"
@@ -116,20 +116,20 @@
             <circle cx="1.84649" cy="6.22003" r="1.43536" fill="#222021" />
             <circle cx="1.84649" cy="11.0042" r="1.43536" fill="#222021" />
           </svg>
-          <ul class="list top-layel" v-if="isListShow">
-            <li
-              class="list-item"
-              v-for="list in listOption"
-              :key="list"
-              @click="handleListItem(list)"
-            >
-              {{ list }}
-            </li>
-          </ul>
         </div>
       </div>
       <div class="unshowList" @click="hideList"></div>
     </div>
+    <ul class="list top-layel" v-if="isListShow">
+      <li
+        class="list-item"
+        v-for="list in listOption"
+        :key="list"
+        @click="handleListItem(list)"
+      >
+        {{ list }}
+      </li>
+    </ul>
   </section>
 </template>
 
@@ -141,13 +141,13 @@ export default {
       isListShow: false,
       isEditing: false,
       isShowEditButton: false,
-      projectTittle: "Project #1",
+      projectTittle: "",
       listOption: ["Move", "Clone", "Share", "Delete"],
       isLikeCLick: false,
     };
   },
   created() {
-    // console.log("DATA", this.data);
+    this.projectTittle = this.data.name;
   },
   methods: {
     handleEdit() {
@@ -192,19 +192,17 @@ export default {
   border-radius: 1rem;
   border: 0.2rem solid #e8e8e8;
   background: #fff;
-  // overflow: hidden;
 
   &:hover {
     box-shadow: 0px 4.784523963928223px 9.569047927856445px 0px
       rgba(0, 0, 0, 0.15);
   }
-  //   position: relative;
+
   z-index: 99;
   &_images {
     height: 80%;
     width: 100%;
     border-radius: 0.5rem 0.5rem 0 0;
-    // overflow: hidden;
     position: relative;
     z-index: 99;
     cursor: pointer;
@@ -354,10 +352,11 @@ export default {
   width: 8.6rem;
   height: auto;
   position: absolute;
-  top: 0;
+  bottom: -10rem;
   right: 0;
   transform: translateY(2.5rem);
   list-style: none;
+  transform: translateX(30%);
 
   border-radius: 5px;
   border: 1px solid #d8e1f3;

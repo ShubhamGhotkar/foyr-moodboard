@@ -9,6 +9,7 @@ export default new Vuex.Store({
   state: {
     roomArray: roomData,
     inspirationArray: inspirationTypeData,
+    // moodboardArray: [],
     moodboardArray: moodboardData,
   },
   getters: {},
