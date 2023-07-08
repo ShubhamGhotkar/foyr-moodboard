@@ -1,11 +1,13 @@
 <template>
   <main class="home-container">
+    <!-- SIDE BAR -->
     <div class="side-bar">
       <SideBar />
     </div>
-
+    <!--MAIN CONTAINER -->
     <div class="slider-container">
       <div class="slider-container-main">
+        <!-- TEMPLATES -->
         <div>
           <div class="templates">
             <div class="templates_info">
@@ -20,7 +22,8 @@
             </div>
           </div>
         </div>
-        <div>
+        <!-- MOODBOARD TEMPLATES -->
+        <div v-if="moodboardData.length === 0">
           <h3 class="header-2 moodboard-heading">MoodBoards</h3>
           <div class="moodboard">
             <div class="moodboard_imgs">
@@ -39,13 +42,28 @@
             </div>
           </div>
         </div>
+        <div v-else class="moodboard-container">
+          <div class="style_container-btn">
+            <h3 class="header-2">MoodBoards</h3>
+            <p class="see-all">See all</p>
+          </div>
+          <div class="cardSlider-container">
+            <CardSlider
+              :sliderArray="moodboardData"
+              name="moodBoard"
+              @handleCard="handleStyleClick"
+            />
+          </div>
+        </div>
+
+        <!-- STYLE CONTAINER -->
         <div>
           <div class="style_container-btn">
             <h3 class="header-2">Style</h3>
             <div class="style_container-btn-container">
               <button
                 v-for="button in styleCardArray"
-                :key="button.name"
+                :key="button.name + Math.random()"
                 class="style-btn"
                 @click="() => handleStyleClick(button.name, `styleSlider`)"
               >
@@ -62,6 +80,7 @@
             />
           </div>
         </div>
+        <!-- ROOM TEMPLATES -->
         <div>
           <div class="room-container">
             <h3 class="header-2">Room Moodboard Templates <span>60+</span></h3>
@@ -84,6 +103,7 @@
 import SideBar from "@/components/SideBar.vue";
 import CardSlider from "@/components/CardSlider.vue";
 import { roomData, inspirationTypeData } from "../data/demoData";
+import { moodboardData } from "../data/moodboardData";
 
 import uniqid from "uniqid";
 
@@ -93,6 +113,15 @@ export default {
     this.roomCardSliders = this.roomCardArray;
     this.roomArray = roomData;
     this.inspirationData = inspirationTypeData;
+    this.moodboardData = moodboardData.map((data) => {
+      return {
+        _id: data.name,
+        src: data.properties.thumbnail,
+        count: data.countOfCommands,
+        id: data.accountId,
+      };
+    });
+    console.log("moodboardData", moodboardData);
   },
   components: {
     SideBar,
@@ -727,6 +756,7 @@ export default {
       //  UPDATED CODE BELOW
       roomArray: [],
       inspirationData: [],
+      moodboardData: [],
     };
   },
   methods: {
@@ -736,7 +766,7 @@ export default {
         this.styleCardSliders = cards.templatesList;
       } else if (name === "roomSlider") {
         let cards = this.roomCardArray.find((card) => card.name === data);
-        console.log("CARDS", cards);
+        // console.log("CARDS", cards);
         this.roomCardSliders = cards.templatesList;
       }
     },

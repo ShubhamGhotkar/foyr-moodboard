@@ -1,11 +1,35 @@
 <template>
   <section class="slider-section">
-    <div class="slider" ref="sliderContainer" @scroll="handleScrollEvent">
+    <div
+      class="slider"
+      ref="sliderContainer"
+      @scroll="handleScrollEvent"
+      v-if="name === `moodBoard`"
+    >
+      <div
+        class="slider_items"
+        v-for="(slider, index) in sliderArray"
+        :style="handleScroll"
+        :key="slider.id + `${Math.random()}`"
+        ref="sliderItem"
+        @click="() => handleSliderClick(slider)"
+      >
+        <!-- CARDS  -->
+        <MoodboardProjectCard :data="slider" :index="index" />
+      </div>
+    </div>
+    <!-- START -->
+    <div
+      class="slider"
+      ref="sliderContainer"
+      @scroll="handleScrollEvent"
+      v-else
+    >
       <div
         class="slider_items"
         v-for="slider in sliderData"
         :style="handleScroll"
-        :key="slider.id"
+        :key="slider.id + `${Math.random()}`"
         ref="sliderItem"
         @click="() => handleSliderClick(slider)"
       >
@@ -40,6 +64,8 @@
         </div>
       </div>
     </div>
+
+    <!-- END -->
     <div
       class="slider_left-btn arrow-btn"
       @click="() => handleSlider(`left`)"
@@ -84,6 +110,7 @@
 </template>
 
 <script>
+import MoodboardProjectCard from "./MoodboardProjectCard.vue";
 export default {
   props: ["sliderArray", "name"],
   data() {
@@ -100,11 +127,17 @@ export default {
       isTemplatesClick: false,
     };
   },
+  components: {
+    MoodboardProjectCard,
+  },
+  mounted() {
+    // console.log(this.sliderData);
+  },
   created() {
     this.rightSlideCount = this.sliderArray.length % this.slideToShow;
-    this.sliderArray.map((slider) => console.log(slider));
+    // this.sliderArray.map((slider) => console.log(slider));
     this.sliderData = this.sliderArray;
-    console.log(this.sliderData);
+    // console.log(this.sliderData);
   },
   computed: {
     handleScroll() {
@@ -226,6 +259,8 @@ export default {
   margin: 0 auto;
   cursor: pointer;
   display: flex;
+  align-items: center;
+  flex-wrap: nowrap;
   gap: 3rem;
 
   overflow-x: scroll;
@@ -251,8 +286,9 @@ export default {
       border-radius: 1rem;
       background-color: rgba(0, 0, 0, 0.595);
       overflow: hidden;
-
+      border: 2px solid #e8e8e8;
       position: relative;
+      overflow: hidden;
 
       &-img {
         width: 100%;

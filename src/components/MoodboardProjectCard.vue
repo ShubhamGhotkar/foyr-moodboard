@@ -1,6 +1,6 @@
 <template>
-  <section>
-    <div class="create_new" v-if="index === 0">
+  <section class="card-section">
+    <div class="create_new" v-if="index === 0" :key="data.id">
       <svg
         xmlns="http://www.w3.org/2000/svg"
         width="37"
@@ -27,11 +27,7 @@
     </div>
     <div class="project" v-else>
       <div class="project_images">
-        <img
-          src="../assets/images/Banner-img.jpg"
-          alt="project_img"
-          class="project_images-img"
-        />
+        <img :src="data.src" alt="project_img" class="project_images-img" />
         <div class="project_images-blur">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -86,7 +82,7 @@
           @click="handleEdit"
           v-else-if="!isEditing"
         >
-          <span v-text="projectTittle"></span>
+          <span v-text="data._id"></span>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="17"
@@ -116,7 +112,7 @@
             <circle cx="1.84649" cy="6.22003" r="1.43536" fill="#222021" />
             <circle cx="1.84649" cy="11.0042" r="1.43536" fill="#222021" />
           </svg>
-          <ul class="list" v-if="isListShow">
+          <ul class="list top-layel" v-if="isListShow">
             <li
               class="list-item"
               v-for="list in listOption"
@@ -135,6 +131,7 @@
 
 <script>
 export default {
+  props: ["data", "index"],
   data() {
     return {
       isListShow: false,
@@ -143,8 +140,10 @@ export default {
       projectTittle: "Project #1",
       listOption: ["Move", "Clone", "Share", "Delete"],
       isLikeCLick: false,
-      index: 0,
     };
+  },
+  created() {
+    console.log("DATA", this.data);
   },
   methods: {
     handleEdit() {
@@ -177,6 +176,9 @@ export default {
 </script>
 
 <style scoped lang="scss">
+.card-section {
+  z-index: 100000000 !important;
+}
 // PROJECT CARD
 .project,
 .create_new {
@@ -184,17 +186,21 @@ export default {
   width: 22.8rem;
 
   border-radius: 1rem;
-  border: 0.1rem solid #e8e8e8;
+  border: 0.2rem solid #e8e8e8;
   background: #fff;
-  //   box-shadow: 0px 4.784523963928223px 9.569047927856445px 0px
-  //     rgba(0, 0, 0, 0.15);
+  // overflow: hidden;
+
+  &:hover {
+    box-shadow: 0px 4.784523963928223px 9.569047927856445px 0px
+      rgba(0, 0, 0, 0.15);
+  }
   //   position: relative;
   z-index: 99;
   &_images {
     height: 80%;
     width: 100%;
     border-radius: 0.5rem 0.5rem 0 0;
-    overflow: hidden;
+    // overflow: hidden;
     position: relative;
     z-index: 99;
     cursor: pointer;
@@ -348,7 +354,6 @@ export default {
   right: 0;
   transform: translateY(2.5rem);
   list-style: none;
-  z-index: 9999;
 
   border-radius: 5px;
   border: 1px solid #d8e1f3;
