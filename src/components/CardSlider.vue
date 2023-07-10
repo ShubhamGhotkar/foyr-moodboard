@@ -8,7 +8,8 @@
       v-if="name === `moodBoard`"
     >
       <div
-        class="slider_items"
+        class="slider_items moodeboardSlider"
+        :class="{ itemFirst: index === 0 }"
         v-for="(slider, index) in sliderData"
         :style="handleScroll"
         :key="slider._id"
@@ -20,7 +21,7 @@
 
     <!-- FOR CARDS -->
     <div
-      class="slider place-center"
+      class="slider place-center overFlowHidden"
       :ref="`${name}-sliderContainer`"
       @scroll="handleScrollEvent"
       v-if="name !== 'moodBoard'"
@@ -252,18 +253,25 @@ export default {
   margin: 0 auto;
   transition: all 0.8s ease-in-out !important;
 }
+.moodeboardSlider {
+  height: 16rem;
+  &:nth-child(2) {
+    margin-left: 1.72rem !important;
+  }
+}
+
 .slider {
   width: 100%;
   padding: 1rem 0;
   margin: 0 auto;
   cursor: pointer;
-
   flex-wrap: nowrap;
   gap: 1.72rem;
-  overflow-x: scroll;
   scroll-snap-type: x mandatory;
   scroll-behavior: smooth;
   -webkit-overflow-scrolling: touch;
+
+  height: max-content;
 
   &::-webkit-scrollbar {
     width: 0;
@@ -352,14 +360,19 @@ export default {
     top: 50%;
     left: 0;
     transform: translate(-50%, -100%);
-    z-index: 999;
   }
   &_right-btn {
     position: absolute;
     top: 50%;
     right: 0;
     transform: translate(50%, -100%);
-    z-index: 999;
   }
+}
+
+.overFlowHidden {
+  overflow: hidden !important;
+}
+.itemFirst {
+  flex: 0 0 38% !important;
 }
 </style>

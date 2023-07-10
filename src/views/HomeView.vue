@@ -23,39 +23,41 @@
           </div>
         </div>
         <!-- MOODBOARD TEMPLATES -->
-        <div v-if="this.$store.state.moodboardArray.length === 0">
-          <h3 class="header-2 moodboard-heading">MoodBoards</h3>
-          <div class="moodboard">
-            <div class="moodboard_imgs">
-              <img
-                src="../assets/images/moodBoard.svg"
-                alt="moodboad image"
-                class="moodboard_imgs-img"
+        <div>
+          <div v-if="this.$store.state.moodboardArray.length === 0">
+            <h3 class="header-2 moodboard-heading">MoodBoards</h3>
+            <div class="moodboard">
+              <div class="moodboard_imgs">
+                <img
+                  src="../assets/images/moodBoard.svg"
+                  alt="moodboad image"
+                  class="moodboard_imgs-img"
+                />
+              </div>
+              <div class="moodboard_info">
+                <h3 class="moodboard_info-heading">
+                  You haven't created moodboard yet.
+                </h3>
+                <p class="moodboard_info-para">
+                  Make your first moodboard now!
+                </p>
+                <button class="main-btn">Create New MoodBoard</button>
+              </div>
+            </div>
+          </div>
+          <div v-else class="moodboard-container clip-path">
+            <div class="style_container-btn">
+              <h3 class="header-2">MoodBoards</h3>
+              <p class="see-all">See all</p>
+            </div>
+            <div class="cardSlider-container">
+              <CardSlider
+                :sliderArray="this.$store.state.moodboardArray"
+                name="moodBoard"
               />
             </div>
-            <div class="moodboard_info">
-              <h3 class="moodboard_info-heading">
-                You haven't created moodboard yet.
-              </h3>
-              <p class="moodboard_info-para">Make your first moodboard now!</p>
-              <button class="main-btn">Create New MoodBoard</button>
-            </div>
           </div>
         </div>
-        <div v-else class="moodboard-container">
-          <div class="style_container-btn">
-            <h3 class="header-2">MoodBoards</h3>
-            <p class="see-all">See all</p>
-          </div>
-          <div class="cardSlider-container">
-            <CardSlider
-              :sliderArray="this.$store.state.moodboardArray"
-              name="moodBoard"
-            />
-          </div>
-          <!-- <div class="moodboard-container-test"></div> -->
-        </div>
-
         <!-- STYLE CONTAINER -->
         <div>
           <div class="style_container-btn p-1">
@@ -123,6 +125,32 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.clip-path {
+  position: relative;
+
+  &::after {
+    content: "";
+    height: 100%;
+    display: inline-block;
+    background: white !important;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 100%;
+    right: -5rem;
+  }
+  &::before {
+    content: "shubham";
+    height: 100%;
+    display: inline-block;
+    background: green !important;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 100%;
+    right: -5rem;
+  }
+}
 .cardSlider-container {
   width: 100%;
 }
@@ -167,6 +195,7 @@ export default {
   border: 2px solid #e8e8e8;
   background: #fdfdfd;
   border-radius: 0.4rem;
+
   &_info {
     &-heading {
       font-size: 2.2rem;

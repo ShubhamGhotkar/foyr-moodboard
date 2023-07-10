@@ -33,6 +33,7 @@ body {
 
 #app {
   width: 100vw;
+  background: orange;
 }
 .sidebar-svg {
   width: 2.8rem;
@@ -117,12 +118,14 @@ body {
 
 .top-layel {
   z-index: 9999 !important;
+  position: relative;
 }
 .mid-layel {
   z-index: 999 !important;
 }
 .lower-layel {
   z-index: 99 !important;
+  position: relative;
 }
 
 .p-1 {
@@ -136,5 +139,17 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
+}
+
+.blurDiv {
+  height: 100vh;
+  width: 100vh;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  background: red;
+  // z-index: 1;
 }
 </style>

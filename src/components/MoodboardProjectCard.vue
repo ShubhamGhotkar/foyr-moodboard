@@ -1,5 +1,5 @@
 <template>
-  <section class="card-section">
+  <section class="card-section" :class="{ setclass: index === 0 }">
     <div class="create_new" v-if="index === 0" :key="data.id">
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -25,7 +25,7 @@
       </svg>
       <div class="create_new-tittle">Create New MoodBoard</div>
     </div>
-    <div class="project" v-else>
+    <div class="project">
       <div class="project_images">
         <img
           :src="data.properties.thumbnail"
@@ -118,18 +118,18 @@
           </svg>
         </div>
       </div>
-      <div class="unshowList" @click="hideList"></div>
+      <ul class="list" v-if="isListShow">
+        <li
+          class="list-item"
+          v-for="list in listOption"
+          :key="list"
+          @click="handleListItem(list)"
+        >
+          {{ list }}
+        </li>
+      </ul>
     </div>
-    <ul class="list top-layel" v-if="isListShow">
-      <li
-        class="list-item"
-        v-for="list in listOption"
-        :key="list"
-        @click="handleListItem(list)"
-      >
-        {{ list }}
-      </li>
-    </ul>
+    <!-- <div class="blurDiv" @click="hideList"></div> -->
   </section>
 </template>
 
@@ -148,6 +148,9 @@ export default {
   },
   created() {
     this.projectTittle = this.data.name;
+  },
+  mounted() {
+    window.addEventListener("click", this.hideList);
   },
   methods: {
     handleEdit() {
@@ -180,25 +183,30 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.card-section {
-  z-index: 100000000 !important;
+.setclass {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.72rem;
 }
+
 // PROJECT CARD
 .project,
 .create_new {
   height: 15.8rem;
-  flex: 0 0 19%;
+  flex: 0 0 50% !important;
 
   border-radius: 1rem;
   border: 0.2rem solid #e8e8e8;
   background: #fff;
+  // overflow: hidden !important;
 
-  &:hover {
-    box-shadow: 0px 4.784523963928223px 9.569047927856445px 0px
-      rgba(0, 0, 0, 0.15);
-  }
+  // &:hover {
+  //   box-shadow: 0px 4.784523963928223px 9.569047927856445px 0px
+  //     rgba(0, 0, 0, 0.15);
+  // }
 
-  z-index: 99;
+  // z-index: 99;
   &_images {
     height: 80%;
     width: 100%;
@@ -348,15 +356,17 @@ export default {
   }
 }
 
+.card-section {
+  height: 16rem;
+}
+
 .list {
   width: 8.6rem;
-  height: auto;
   position: absolute;
-  bottom: -10rem;
+  bottom: -11rem;
   right: 0;
-  transform: translateY(2.5rem);
   list-style: none;
-  transform: translateX(30%);
+  z-index: 9999 !important;
 
   border-radius: 5px;
   border: 1px solid #d8e1f3;
@@ -382,14 +392,6 @@ export default {
   }
 }
 
-.unshowList {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  right: 0;
-  left: 0;
-  background: transparent;
-}
 .edit-svg {
   height: 1.8rem;
   width: 1.8rem;
