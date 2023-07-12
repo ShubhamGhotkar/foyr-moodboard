@@ -1,7 +1,7 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 import HomeView from "../views/HomeView.vue";
-import TheAbout from "../views/TheAbout.vue";
+import FolderView from "../views/FolderView.vue";
 
 Vue.use(VueRouter);
 
@@ -14,7 +14,7 @@ const routes = [
   {
     path: "/about",
     name: "about",
-    component: TheAbout,
+    component: FolderView,
   },
 ];
 

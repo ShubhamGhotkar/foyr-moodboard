@@ -1,16 +1,12 @@
 <template>
-  <div class="section">
-    <div class="div">
-      <MoodboardProjectCard :data="slider" :index="2" />
-    </div>
-  </div>
+  <div class="section"></div>
 </template>
 
 <script>
-import MoodboardProjectCard from "@/components/MoodboardProjectCard.vue";
+// import MoodboardProjectCard from "@/components/MoodboardProjectCard.vue";
 export default {
   components: {
-    MoodboardProjectCard,
+    // MoodboardProjectCard,
   },
   data() {
     return {

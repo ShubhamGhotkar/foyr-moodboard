@@ -91,7 +91,7 @@
       class="slider_right-btn arrow-btn"
       :class="{ 'mt-2': name === 'moodBoard' }"
       @click="handleSlider(`right`)"
-      v-if="checkRight"
+      v-if="checkRight && sliderData.length > slideToShow"
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -224,7 +224,7 @@ export default {
       setTimeout(() => {
         this.rightSlideCount = pendingCards;
         this.leftSlideCount = totalCards - pendingCards;
-      }, 270);
+      }, 300);
       this.leftSliderClick = true;
     },
 
@@ -262,16 +262,22 @@ export default {
 
 .slider {
   width: 100%;
+  height: fit-content;
   padding: 1rem 0;
   margin: 0 auto;
   cursor: pointer;
+
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
   flex-wrap: nowrap;
   gap: 1.72rem;
   scroll-snap-type: x mandatory;
   scroll-behavior: smooth;
   -webkit-overflow-scrolling: touch;
-
-  height: max-content;
+  overflow: scroll;
+  // overflow-y: hidden;
+  // height: fit-content;
 
   &::-webkit-scrollbar {
     width: 0;
@@ -279,7 +285,7 @@ export default {
   }
 
   &_items {
-    flex: 0 0 19%;
+    flex: 0 0 18.9%;
     position: relative;
     scroll-snap-align: end;
 

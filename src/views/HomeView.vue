@@ -1,9 +1,9 @@
 <template>
   <main class="home-container">
     <!-- SIDE BAR -->
-    <div class="side-bar">
+    <!-- <div class="side-bar">
       <SideBar />
-    </div>
+    </div> -->
     <!--MAIN CONTAINER -->
     <div class="slider-container">
       <div class="slider-container-main">
@@ -45,7 +45,7 @@
               </div>
             </div>
           </div>
-          <div v-else class="moodboard-container clip-path">
+          <div v-else class="moodboard-container">
             <div class="style_container-btn">
               <h3 class="header-2">MoodBoards</h3>
               <p class="see-all">See all</p>
@@ -65,9 +65,10 @@
             <div class="style_container-btn-container">
               <button
                 v-for="button in this.$store.state.inspirationArray"
-                :key="button._id + Math.random()"
+                :key="button._id"
                 class="style-btn"
                 @click="handleButtonClick(button._id)"
+                :class="{ activeBtn: button._id === selectedButtonId }"
               >
                 {{ button._id }}
               </button>
@@ -101,23 +102,25 @@
 </template>
 
 <script>
-import SideBar from "@/components/SideBar.vue";
+// import SideBar from "@/components/SideBar.vue";
 import CardSlider from "@/components/CardSlider.vue";
 
 export default {
   created() {},
   data() {
     return {
+      selectedButtonId: null,
       // buttonClickText: "",
     };
   },
   components: {
-    SideBar,
+    // SideBar,
     CardSlider,
   },
 
   methods: {
     handleButtonClick(data) {
+      this.selectedButtonId = data;
       this.$refs.styleSliderChild.childFunction(data);
     },
   },
@@ -125,32 +128,40 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.clip-path {
-  position: relative;
-
-  &::after {
-    content: "";
-    height: 100%;
-    display: inline-block;
-    background: white !important;
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 100%;
-    right: -5rem;
-  }
-  &::before {
-    content: "shubham";
-    height: 100%;
-    display: inline-block;
-    background: green !important;
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 100%;
-    right: -5rem;
-  }
+.activeBtn {
+  background: #e9beb3;
 }
+// .clip-path {
+// position: relative;
+
+// &::before {
+//   content: "";
+//   height: 100%;
+//   display: inline-block;
+//   // background: green !important;
+//   background: white !important;
+//   position: absolute;
+//   top: 0;
+//   bottom: 0;
+//   left: -10rem;
+//   right: 100%;
+//   z-index: 199;
+// }
+
+// &::after {
+//   content: "";
+//   height: 100%;
+//   display: inline-block;
+//   background: white !important;
+//   // background: orange !important;
+//   position: absolute;
+//   top: 0;
+//   bottom: 0;
+//   left: 100%;
+//   right: -7rem;
+//   margin-left: 0.5rem;
+// }
+// }
 .cardSlider-container {
   width: 100%;
 }

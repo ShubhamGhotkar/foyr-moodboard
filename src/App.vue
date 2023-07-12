@@ -1,15 +1,18 @@
 <template>
   <div id="app">
     <TheHeader />
+    <SideBar />
     <router-view />
   </div>
 </template>
 
 <script>
 import TheHeader from "./components/TheHeader.vue";
+import SideBar from "./components/SideBar.vue";
 export default {
   components: {
     TheHeader,
+    SideBar,
   },
 };
 </script>
@@ -33,7 +36,6 @@ body {
 
 #app {
   width: 100vw;
-  background: orange;
 }
 .sidebar-svg {
   width: 2.8rem;

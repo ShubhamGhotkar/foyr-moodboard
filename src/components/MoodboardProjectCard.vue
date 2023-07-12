@@ -83,7 +83,8 @@
         </div>
         <div
           class="project_info-tittle"
-          @click="handleEdit"
+          @mouseover="showEditBtn"
+          @mouseout="hideEditBtn"
           v-else-if="!isEditing"
         >
           <span v-text="projectTittle"></span>
@@ -153,10 +154,14 @@ export default {
     window.addEventListener("click", this.hideList);
   },
   methods: {
-    handleEdit() {
+    showEditBtn() {
       this.isShowEditButton = true;
     },
+    hideEditBtn() {
+      this.isShowEditButton = false;
+    },
     handleUserInput() {
+      window.alert("click");
       this.isEditing = true;
     },
     handletext(e) {
@@ -398,6 +403,7 @@ export default {
   stroke: #0e0e0e;
   stroke-width: 0;
   margin: 0 auto 0 1rem;
+  z-index: 99;
 
   &:hover {
     cursor: pointer;
