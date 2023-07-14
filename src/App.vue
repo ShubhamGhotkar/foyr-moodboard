@@ -1,8 +1,14 @@
 <template>
-  <div id="app">
-    <TheHeader />
-    <SideBar />
-    <router-view />
+  <div id="app" class="app">
+    <div class="app_header">
+      <TheHeader />
+    </div>
+    <div class="app_sidebar">
+      <SideBar />
+    </div>
+    <div class="app_routerview">
+      <router-view />
+    </div>
   </div>
 </template>
 
@@ -28,7 +34,7 @@ html {
   font-size: 10px;
 }
 body {
-  font-family: Montserrat;
+  font-family: Montserrat, sans-serif;
   overflow-x: hidden !important;
   font-style: normal;
   line-height: normal;
@@ -36,6 +42,42 @@ body {
 
 #app {
   width: 100vw;
+}
+/*APP STYLE */
+
+.app {
+  width: 100%;
+  min-height: 100vh;
+  max-height: auto;
+
+  display: grid;
+  grid-template-columns: 6.5vw 93.5vw;
+  grid-template-rows: 6rem auto;
+  &_header {
+    grid-row: 1/2;
+    grid-column: 1/3;
+  }
+  &_sidebar {
+    grid-row: 2/3;
+    grid-column: 1/2;
+  }
+  &_routerview {
+    grid-row: 2/3;
+    grid-column: 2/3;
+  }
+}
+
+/*COMMON CLASSES */
+
+.flex-bet-center {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.grid-center {
+  display: grid;
+  place-items: center;
 }
 .sidebar-svg {
   width: 2.8rem;
@@ -77,9 +119,6 @@ body {
   border-radius: 0.6rem;
   cursor: pointer;
   font-weight: 500;
-
-  // position: relative;
-  // z-index: 9;
 }
 
 .header-2 {
@@ -123,14 +162,12 @@ body {
 
 .top-layel {
   z-index: 9999 !important;
-  position: relative;
 }
 .mid-layel {
   z-index: 999 !important;
 }
 .lower-layel {
   z-index: 99 !important;
-  position: relative;
 }
 
 .p-1 {

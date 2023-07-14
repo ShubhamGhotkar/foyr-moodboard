@@ -1,8 +1,8 @@
 <template>
-  <section class="sidebar">
-    <div class="sidebar_items">
+  <section class="sidebar top-layel flex-bet-center">
+    <div class="sidebar_items flex-bet-center">
       <div
-        class="sidebar_item"
+        class="sidebar_item grid-center"
         v-for="item in getSidebarItems()"
         :key="item.name"
       >
@@ -13,7 +13,7 @@
       </div>
     </div>
     <!-- logout icon -->
-    <div class="sidebar_logout">
+    <div class="sidebar_logout grid-center">
       <svg
         width="24"
         height="24"
@@ -33,37 +33,9 @@
 </template>
 
 <script>
-import Dashboard from "../assets/icons/dashboard-icon.svg";
-import accountIcon from "../assets/icons/account-icon.svg";
-import folderIcon from "../assets/icons/folder-icon.svg";
-import templatesIcon from "../assets/icons/templates-icon.svg";
-import tutorialIcon from "../assets/icons/tutorial-icon.svg";
-
 export default {
   data() {
     return {
-      sideBarItems: [
-        {
-          name: "Dashboard",
-          svg: Dashboard,
-        },
-        {
-          name: "Folder",
-          svg: folderIcon,
-        },
-        {
-          name: "Templates",
-          svg: templatesIcon,
-        },
-        {
-          name: "Totorial",
-          svg: tutorialIcon,
-        },
-        {
-          name: "Accounts",
-          svg: accountIcon,
-        },
-      ],
       sideBarItems1: [
         {
           name: "Dashboard",
@@ -168,26 +140,22 @@ export default {
   left: 0;
   top: 5.2rem;
   bottom: 0;
-  z-index: 10000;
 
-  display: flex;
+  // FLEX CLASS ADDED TO THE DIV ELEMENT
   flex-direction: column;
-  justify-content: space-between;
 
   &_items {
     width: 100%;
     height: 40%;
     color: #b5b5b5;
-    display: flex;
+
+    // FLEX CLASS ADDED TO THE DIV ELEMENT
     flex-direction: column;
-    justify-content: space-between;
     gap: 1rem;
   }
   &_item {
     width: 100%;
     height: 25%;
-    display: grid;
-    place-items: center;
     padding: 0.6rem 0;
 
     &:first-child {
@@ -207,10 +175,6 @@ export default {
     &-tittle {
       font-size: 1.2rem;
       font-weight: 500 !important;
-      font-family: sans-serif;
-      line-height: normal;
-      font-style: normal;
-      font-family: Montserrat, sans-serif;
       padding: 0.3rem 0 0 0;
       margin-top: 0.3rem;
     }
@@ -219,8 +183,6 @@ export default {
   &_logout {
     width: 100%;
     height: 8%;
-    display: grid;
-    place-items: center;
     color: #b5b5b5;
     margin-bottom: 3rem;
 
@@ -234,11 +196,6 @@ export default {
     &-tittle {
       font-size: 1.2rem;
       font-weight: 500 !important;
-      font-family: sans-serif;
-      line-height: normal;
-      font-style: normal;
-      font-family: Montserrat, sans-serif;
-
       margin-top: 0.3rem;
     }
   }

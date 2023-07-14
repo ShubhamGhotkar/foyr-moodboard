@@ -1,9 +1,9 @@
 <template>
-  <header class="header">
-    <nav>
+  <header class="header top-layel flex-bet-center">
+    <nav class="flex-bet-center">
       <h2 class="header_logo">NEO</h2>
-      <ul class="header_list">
-        <li class="header_list-item1">
+      <ul class="header_list flex-bet-center">
+        <li class="header_list-item1 grid-center">
           <input
             type="text"
             class="header_list-item1-input"
@@ -31,20 +31,16 @@ export default {};
 
 <style lang="scss" scoped>
 .header {
-  width: 100vw;
+  width: 100%;
   height: 6rem;
   background: linear-gradient(to right, #4d4c4d, #201f20);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
 
   position: fixed;
-  z-index: 9999;
-
+  top: 0;
+  right: 0;
   &_logo {
     font-size: 2.4rem;
     color: #e9beb3;
-    font-family: Montserrat;
     font-weight: 700;
     text-transform: uppercase;
     margin-left: 2.2rem;
@@ -53,15 +49,10 @@ export default {};
   &_list {
     flex: 0 0 40%;
     height: 100%;
-    display: flex;
     list-style: none;
-    justify-content: space-between;
-    align-items: center;
 
     &-item1 {
       flex: 0 0 60%;
-      display: grid;
-      place-items: center;
       &-input {
         width: 100%;
         padding: 1rem 2rem;
@@ -74,7 +65,6 @@ export default {};
         &::placeholder {
           display: flex;
           align-items: center;
-
           padding-left: 2.6rem;
           font-size: 1.6rem;
           background-image: url("../assets/images/search-2-line.png");
@@ -95,16 +85,12 @@ export default {};
       &-btn {
         border-radius: 0.4rem;
         background-color: #e9beb3;
-        border: none;
-        cursor: pointer;
         color: #232121;
         text-align: center;
-        font-family: Montserrat, sans-serif;
-        font-style: normal;
         font-weight: 700;
-        line-height: normal;
-
         padding: 1.2rem 1.3rem;
+        border: none;
+        cursor: pointer;
       }
     }
     &-item3 {
@@ -120,8 +106,5 @@ export default {};
 }
 nav {
   flex: 0 0 100%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
 }
 </style>

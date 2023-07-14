@@ -36,7 +36,7 @@
           alt="project_img"
           class="project_images-img"
         />
-        <div class="project_images-blur">
+        <div class="project_images-blur grid-center">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="24"
@@ -71,8 +71,8 @@
           </button>
         </div>
       </div>
-      <div class="project_info">
-        <div class="project_info-tittle" v-if="isEditing">
+      <div class="project_info flex-bet-center">
+        <div class="project_info-tittle flex-bet-center" v-if="isEditing">
           <input
             type="text"
             class="project_info-tittle-input"
@@ -102,7 +102,10 @@
             fill="#222021"
           />
         </svg>
-        <div class="project_info_dot-container" @mouseover="showList">
+        <div
+          class="project_info_dot-container grid-center"
+          @mouseover="showList"
+        >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="4"
@@ -128,13 +131,11 @@
         </ul>
       </div>
     </div>
-    <!-- <div class="blurDiv" @click="hideList"></div> -->
   </section>
 </template>
 
 <script>
 export default {
-  // props: ["data", "index"],
   props: {
     data: {
       type: Object,
@@ -178,7 +179,6 @@ export default {
       this.isShowEditButton = false;
     },
     handletext(e) {
-      // e.target.value = this.projectTittle;
       this.projectTittle = e.target.value;
       this.isShowEditButton = false;
     },
@@ -233,7 +233,6 @@ export default {
       rgba(0, 0, 0, 0.15);
   }
 
-  // z-index: 99;
   &_images {
     height: 80%;
     width: 100%;
@@ -258,8 +257,6 @@ export default {
       top: 0;
       left: 0;
 
-      display: grid;
-      place-items: center;
       transition: all 0.3s ease-in-out;
 
       &:hover {
@@ -277,7 +274,7 @@ export default {
         background-color: #fff;
         text-align: center;
         font-size: 1.2rem;
-        line-height: normal;
+
         font-weight: 500;
         &:hover {
           cursor: pointer;
@@ -297,34 +294,25 @@ export default {
   &_info {
     height: 20%;
     width: 100%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    // background: red;
     position: relative;
 
     padding: 0 1rem;
     &-tittle {
       font-size: 1.4rem;
       color: #0e0e0e;
-      font-family: Montserrat;
-      font-style: normal;
+
       font-weight: 700;
-      line-height: normal;
+
       z-index: 99 !important;
       cursor: pointer;
 
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
       &-input {
         width: 100%;
         border: none;
         color: #0e0e0e;
-        font-family: Montserrat;
-        font-style: normal;
+
         font-weight: 500;
-        line-height: normal;
+
         padding: 0.2rem 0.5rem;
 
         &:focus {
@@ -336,8 +324,6 @@ export default {
     &_dot-container {
       flex: 0 0 10%;
       height: 100%;
-      display: grid;
-      place-items: center;
       position: relative;
       z-index: 999;
 
@@ -378,11 +364,10 @@ export default {
   &-tittle {
     color: #0e0e0e;
     text-align: center;
-    font-family: Montserrat;
+
     font-size: 1.4rem;
-    font-style: normal;
+
     font-weight: 500;
-    line-height: normal;
   }
 }
 
@@ -400,11 +385,11 @@ export default {
   box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.05);
   &-item {
     color: #172b4d;
-    font-family: Montserrat;
+
     font-size: 1.4rem;
-    font-style: normal;
+
     font-weight: 300;
-    line-height: normal;
+
     padding: 0.6rem 0;
     text-align: center;
 

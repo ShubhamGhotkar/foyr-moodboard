@@ -32,11 +32,9 @@ export default {
 
 <style lang="scss" scoped>
 .project {
-  width: 100vw;
-  min-height: 100vh;
+  width: 100%;
+  min-height: auto;
   height: auto;
-  display: grid;
-  grid-template-columns: 6.5vw 93.5vw;
 
   &_container {
     width: 100%;
@@ -44,10 +42,9 @@ export default {
     padding-top: 6.5rem;
     min-height: 100vh;
     background-color: #fff;
-    padding: 8.5rem 4.8rem 2.8rem 2.6rem;
+    padding: 2.6rem 4.8rem 2.8rem 2.6rem;
 
     display: flex;
-
     gap: 1.7rem;
     justify-content: flex-start;
     align-items: flex-start;
@@ -58,8 +55,5 @@ export default {
 .cards_container {
   flex: 0 0 18%;
   margin: 0 auto;
-}
-.firstCard {
-  // flex: 0 0 37.7%;
 }
 </style>

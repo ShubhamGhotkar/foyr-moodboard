@@ -18,9 +18,7 @@
             </div>
           </div>
         </div>
-        <!--  -->
 
-        <!--  -->
         <!-- MOODBOARD TEMPLATES -->
         <div>
           <div v-if="this.$store.state.moodboardArray.length === 0">
@@ -101,7 +99,6 @@
 </template>
 
 <script>
-// import SideBar from "@/components/SideBar.vue";
 import CardSlider from "@/components/CardSlider.vue";
 
 export default {
@@ -109,11 +106,9 @@ export default {
   data() {
     return {
       selectedButtonId: null,
-      // buttonClickText: "",
     };
   },
   components: {
-    // SideBar,
     CardSlider,
   },
 
@@ -135,21 +130,15 @@ export default {
   width: 100%;
 }
 .home-container {
-  width: 100vw;
-  min-height: 100vh;
+  width: 100%;
+  margin: 0 auto;
   height: auto;
-  display: grid;
-  grid-template-columns: 6.5vw 93.5vw;
 }
-.side-bar {
-  grid-column: 1/2;
-}
+
 .slider-container {
-  grid-column: 2/3;
-  padding-top: 6.5rem;
-  min-height: 100vh;
+  max-height: auto;
   background-color: #fff;
-  padding: 8.5rem 4.8rem 2.8rem 2.6rem;
+  padding: 2.6rem 4.8rem 2.8rem 2.6rem;
 
   &-main {
     margin: 0 auto;
@@ -179,6 +168,31 @@ export default {
   &-container {
     width: 100%;
     height: max-content;
+    position: relative;
+
+    &::before {
+      content: "";
+      height: 100%;
+      background: #fff;
+      position: absolute;
+      top: 0;
+      left: -100%;
+      bottom: 0;
+      right: 100.7%;
+      z-index: 99;
+    }
+
+    &::after {
+      content: "";
+      height: 100%;
+      background: #fff;
+      position: absolute;
+      top: 0;
+      right: -100%;
+      bottom: 0;
+      left: 100.7%;
+      z-index: 99;
+    }
   }
 
   &_info {
@@ -229,7 +243,7 @@ export default {
   height: auto;
   height: fit-content;
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   justify-content: space-between;
   gap: 0.6rem;
 

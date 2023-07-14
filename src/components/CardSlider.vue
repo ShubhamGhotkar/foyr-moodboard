@@ -4,7 +4,6 @@
     <div
       class="slider place-center moodboard-container"
       :ref="`sliderContainer`"
-      @scroll="handleScrollEvent"
       v-if="name === `moodBoard`"
     >
       <div
@@ -25,7 +24,6 @@
     <div
       class="slider place-center overFlowHidden"
       :ref="`${name}-sliderContainer`"
-      @scroll="handleScrollEvent"
       v-if="name !== 'moodBoard'"
     >
       <div
@@ -126,7 +124,6 @@ export default {
       leftSliderClick: false,
       currentIndex: 0,
       scrollX: 0,
-      x: 0,
 
       //SLIDER DATA
       sliderData: [],
@@ -162,25 +159,10 @@ export default {
   },
   methods: {
     handleKeyPress(e) {
-      // let ele = this.$refs.sliderContainer;
-
-      // console.log(ele.childElementCount);
-      // console.log(ele.clientWidth);
-      // ele.scrollLeft = 280;
       if (e.key === "ArrowLeft") {
-        // if (this.x >= 0) {
-        // this.x += 20.5;
-        // ele.style.transform = `translateX(${this.x}%)`;
-        // console.log("ArrowLeft", this.x);
-        // }
         this.handleSlider("left");
       } else if (e.key === "ArrowRight") {
         this.handleSlider("right");
-        // if (this.x <= 0) {
-        // this.x -= 20.5;
-        // console.log("ArrowRight", this.x);
-        // ele.style.transform = `translateX(${this.x}%)`;
-        // }
       }
     },
     setText() {
@@ -221,35 +203,6 @@ export default {
       this.sliderData = sliderTemplatesArray;
       this.isTemplatesClick = true;
     },
-    handleKeyEvent(e) {
-      window.alert(e.target);
-    },
-    handleScrollEvent() {
-      // Access the slider container
-      const sliderContainer = this.$refs.sliderContainer;
-
-      // Get scroll position
-      const scrollPosition = sliderContainer.scrollLeft;
-
-      // Total width of sliderContainer
-      const totalWidth = sliderContainer.scrollWidth;
-
-      // Width of slider card
-      const containerWidth = sliderContainer.offsetWidth;
-
-      // Calculate the width of each card
-      const cardWidth = totalWidth / this.sliderData.length;
-
-      // Calculate the number of pending cards to the right
-      let actualWidth = totalWidth - containerWidth - scrollPosition;
-      let pendingCards = Math.floor(actualWidth / cardWidth);
-      let totalCards = this.sliderData.length - this.slideToShow;
-
-      this.rightSlideCount = pendingCards;
-      this.leftSlideCount = totalCards - pendingCards;
-
-      this.leftSliderClick = true;
-    },
 
     childFunction(data) {
       let cardsToShow = this.$store.state.inspirationArray.find(
@@ -274,8 +227,6 @@ export default {
   width: 100%;
   position: relative;
   margin: 0 auto;
-  // overflow-x: scroll;
-  // overflow-y: visible;
   transition: all 0.8s ease-in-out !important;
   &:focus {
     outline: none;
@@ -294,22 +245,12 @@ export default {
   align-items: center;
   flex-wrap: nowrap;
   gap: 1.72rem;
-  // scroll-snap-type: x mandatory;
-  // scroll-behavior: smooth;
-  // -webkit-overflow-scrolling: touch;
-  // overflow: scroll;
-  height: max-contentx;
-
-  // &::-webkit-scrollbar {
-  //   width: 0;
-  //   height: 0;
-  // }
+  height: max-content;
 
   &_items {
     flex: 0 0 19%;
     position: relative;
     scroll-snap-align: end;
-    // padding: 0 1rem;
 
     &-images {
       width: 100%;
@@ -399,12 +340,5 @@ export default {
 
 .overFlowHidden {
   overflow: hidden !important;
-}
-
-.moodboard-container {
-  // background: red;
-  // height: max-content;
-  // padding-bottom: 11rem;
-  // background: transparent;
 }
 </style>
