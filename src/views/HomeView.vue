@@ -1,9 +1,5 @@
 <template>
   <main class="home-container">
-    <!-- SIDE BAR -->
-    <!-- <div class="side-bar">
-      <SideBar />
-    </div> -->
     <!--MAIN CONTAINER -->
     <div class="slider-container">
       <div class="slider-container-main">
@@ -22,6 +18,9 @@
             </div>
           </div>
         </div>
+        <!--  -->
+
+        <!--  -->
         <!-- MOODBOARD TEMPLATES -->
         <div>
           <div v-if="this.$store.state.moodboardArray.length === 0">
@@ -131,37 +130,7 @@ export default {
 .activeBtn {
   background: #e9beb3;
 }
-// .clip-path {
-// position: relative;
 
-// &::before {
-//   content: "";
-//   height: 100%;
-//   display: inline-block;
-//   // background: green !important;
-//   background: white !important;
-//   position: absolute;
-//   top: 0;
-//   bottom: 0;
-//   left: -10rem;
-//   right: 100%;
-//   z-index: 199;
-// }
-
-// &::after {
-//   content: "";
-//   height: 100%;
-//   display: inline-block;
-//   background: white !important;
-//   // background: orange !important;
-//   position: absolute;
-//   top: 0;
-//   bottom: 0;
-//   left: 100%;
-//   right: -7rem;
-//   margin-left: 0.5rem;
-// }
-// }
 .cardSlider-container {
   width: 100%;
 }
@@ -206,6 +175,11 @@ export default {
   border: 2px solid #e8e8e8;
   background: #fdfdfd;
   border-radius: 0.4rem;
+
+  &-container {
+    width: 100%;
+    height: max-content;
+  }
 
   &_info {
     &-heading {

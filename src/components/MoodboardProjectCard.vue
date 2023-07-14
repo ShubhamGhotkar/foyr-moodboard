@@ -1,5 +1,9 @@
 <template>
-  <section class="card-section" :class="{ setclass: index === 0 }">
+  <section
+    class="card-section"
+    :class="{ setclass: index === 0 }"
+    @mouseleave="hideEditBtn"
+  >
     <div class="create_new" v-if="index === 0" :key="data.id">
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -25,7 +29,7 @@
       </svg>
       <div class="create_new-tittle">Create New MoodBoard</div>
     </div>
-    <div class="project">
+    <div class="project" @mouseover="showEditBtn">
       <div class="project_images">
         <img
           :src="data.properties.thumbnail"
@@ -42,6 +46,7 @@
             class="project_images-blur-likeBtn"
             @click="handleLike"
             :style="{ 'likeBtn-active': isLikeCLick }"
+            v-if="name !== 'project'"
           >
             <path
               d="M11.6707 4.81612C13.9185 2.798 17.3921 2.86499 19.5575 5.03429C21.722 7.20455 21.7967 10.6609 19.7834 12.9154L11.6688 21.0414L3.55617 12.9154C1.54284 10.6609 1.61843 7.19881 3.782 5.03429C5.94938 2.86786 9.41625 2.79513 11.6707 4.81612ZM18.2025 6.3864C16.7672 4.94913 14.4515 4.89075 12.9491 6.23999L11.6717 7.38636L10.3933 6.24095C8.88613 4.8898 6.5752 4.94913 5.13602 6.38831C3.71023 7.8141 3.63846 10.0963 4.95229 11.6044L11.6698 18.3324L18.3872 11.6054C19.702 10.0963 19.6303 7.81697 18.2025 6.3864Z"
@@ -67,43 +72,36 @@
         </div>
       </div>
       <div class="project_info">
-        <div
-          class="project_info-tittle"
-          @click="handleProjectInput"
-          v-if="isEditing"
-        >
+        <div class="project_info-tittle" v-if="isEditing">
           <input
             type="text"
             class="project_info-tittle-input"
+            :class="{ hide: !isEditing }"
             @blur="handleBlur"
             v-if="isEditing"
-            autofocus
             @input="handletext"
+            v-model="projectTittle"
+            ref="input"
           />
         </div>
-        <div
-          class="project_info-tittle"
-          @mouseover="showEditBtn"
-          @mouseout="hideEditBtn"
-          v-else-if="!isEditing"
-        >
-          <span v-text="projectTittle"></span>
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="17"
-            height="17"
-            viewBox="0 0 17 17"
-            fill="none"
-            class="edit-svg"
-            @click="handleUserInput"
-            v-if="isShowEditButton"
-          >
-            <path
-              d="M10.7556 6.72545L9.81293 5.78279L3.6036 11.9921V12.9348H4.54626L10.7556 6.72545ZM11.6983 5.78279L12.6409 4.84012L11.6983 3.89746L10.7556 4.84012L11.6983 5.78279ZM5.09826 14.2681H2.27026V11.4395L11.2269 2.48279C11.3519 2.35781 11.5215 2.2876 11.6983 2.2876C11.875 2.2876 12.0446 2.35781 12.1696 2.48279L14.0556 4.36879C14.1806 4.49381 14.2508 4.66335 14.2508 4.84012C14.2508 5.0169 14.1806 5.18644 14.0556 5.31146L5.09826 14.2681Z"
-              fill="#222021"
-            />
-          </svg>
+        <div class="project_info-tittle" v-else-if="!isEditing">
+          <span>{{ getProjectName() }}</span>
         </div>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="17"
+          height="17"
+          viewBox="0 0 17 17"
+          fill="none"
+          class="edit-svg"
+          @click="handleUserInput"
+          v-if="isShowEditButton"
+        >
+          <path
+            d="M10.7556 6.72545L9.81293 5.78279L3.6036 11.9921V12.9348H4.54626L10.7556 6.72545ZM11.6983 5.78279L12.6409 4.84012L11.6983 3.89746L10.7556 4.84012L11.6983 5.78279ZM5.09826 14.2681H2.27026V11.4395L11.2269 2.48279C11.3519 2.35781 11.5215 2.2876 11.6983 2.2876C11.875 2.2876 12.0446 2.35781 12.1696 2.48279L14.0556 4.36879C14.1806 4.49381 14.2508 4.66335 14.2508 4.84012C14.2508 5.0169 14.1806 5.18644 14.0556 5.31146L5.09826 14.2681Z"
+            fill="#222021"
+          />
+        </svg>
         <div class="project_info_dot-container" @mouseover="showList">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -118,17 +116,17 @@
             <circle cx="1.84649" cy="11.0042" r="1.43536" fill="#222021" />
           </svg>
         </div>
+        <ul class="list" v-if="isListShow">
+          <li
+            class="list-item"
+            v-for="list in listOption"
+            :key="list"
+            @click="handleListItem(list)"
+          >
+            {{ list }}
+          </li>
+        </ul>
       </div>
-      <ul class="list" v-if="isListShow">
-        <li
-          class="list-item"
-          v-for="list in listOption"
-          :key="list"
-          @click="handleListItem(list)"
-        >
-          {{ list }}
-        </li>
-      </ul>
     </div>
     <!-- <div class="blurDiv" @click="hideList"></div> -->
   </section>
@@ -136,7 +134,22 @@
 
 <script>
 export default {
-  props: ["data", "index"],
+  // props: ["data", "index"],
+  props: {
+    data: {
+      type: Object,
+      require: true,
+    },
+    index: {
+      type: Number,
+      require: true,
+    },
+    name: {
+      type: String,
+      require: false,
+      default: "",
+    },
+  },
   data() {
     return {
       isListShow: false,
@@ -161,11 +174,13 @@ export default {
       this.isShowEditButton = false;
     },
     handleUserInput() {
-      window.alert("click");
       this.isEditing = true;
+      this.isShowEditButton = false;
     },
     handletext(e) {
+      // e.target.value = this.projectTittle;
       this.projectTittle = e.target.value;
+      this.isShowEditButton = false;
     },
     handleBlur() {
       this.isEditing = false;
@@ -183,14 +198,23 @@ export default {
     handleLike() {
       this.isLikeCLick = true;
     },
+    getProjectName() {
+      let displayName = this.projectTittle.slice(0, 15);
+      return displayName;
+    },
   },
 };
 </script>
 
 <style scoped lang="scss">
+.card-section {
+  width: 100%;
+}
 .setclass {
+  min-width: 100%;
+  max-width: max-content;
+  height: 15.4rem;
   display: flex;
-  align-items: center;
   justify-content: space-between;
   gap: 1.72rem;
 }
@@ -198,18 +222,16 @@ export default {
 // PROJECT CARD
 .project,
 .create_new {
-  height: 15.8rem;
-  flex: 0 0 50% !important;
-
+  width: 25.6rem;
+  height: 15.4rem;
   border-radius: 1rem;
   border: 0.2rem solid #e8e8e8;
   background: #fff;
-  // overflow: hidden !important;
 
-  // &:hover {
-  //   box-shadow: 0px 4.784523963928223px 9.569047927856445px 0px
-  //     rgba(0, 0, 0, 0.15);
-  // }
+  &:hover {
+    box-shadow: 0px 4.784523963928223px 9.569047927856445px 0px
+      rgba(0, 0, 0, 0.15);
+  }
 
   // z-index: 99;
   &_images {
@@ -219,6 +241,7 @@ export default {
     position: relative;
     z-index: 99;
     cursor: pointer;
+    overflow: hidden;
 
     &-img {
       height: 100%;
@@ -277,10 +300,11 @@ export default {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    // background: red;
+    position: relative;
 
     padding: 0 1rem;
     &-tittle {
-      flex: 0 0 90%;
       font-size: 1.4rem;
       color: #0e0e0e;
       font-family: Montserrat;
@@ -302,6 +326,7 @@ export default {
         font-weight: 500;
         line-height: normal;
         padding: 0.2rem 0.5rem;
+
         &:focus {
           outline: none;
           border-bottom: 2px dotted #172b4d;
@@ -324,7 +349,7 @@ export default {
         stroke-width: 0;
 
         &:hover {
-          cursor: pointer;
+          cursor: pointer !important;
         }
       }
     }
@@ -361,17 +386,13 @@ export default {
   }
 }
 
-.card-section {
-  height: 16rem;
-}
-
 .list {
   width: 8.6rem;
   position: absolute;
   bottom: -11rem;
   right: 0;
   list-style: none;
-  z-index: 9999 !important;
+  z-index: 999999 !important;
 
   border-radius: 5px;
   border: 1px solid #d8e1f3;
@@ -405,12 +426,14 @@ export default {
   margin: 0 auto 0 1rem;
   z-index: 99;
 
-  &:hover {
-    cursor: pointer;
-  }
+  cursor: pointer;
 }
 
 .likeBtn-active {
   stroke: red;
+}
+
+.hide {
+  display: none !important;
 }
 </style>

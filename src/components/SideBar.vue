@@ -7,7 +7,7 @@
         :key="item.name"
       >
         <router-link :to="item.path" class="sidebar_item-Link">
-          <div v-html="item.svg" class="sidebar_item-svg"></div>
+          <div class="sidebar_item-svg" v-html="item.svg"></div>
           <p class="sidebar_item-tittle">{{ item.name }}</p>
         </router-link>
       </div>
@@ -38,7 +38,7 @@ import accountIcon from "../assets/icons/account-icon.svg";
 import folderIcon from "../assets/icons/folder-icon.svg";
 import templatesIcon from "../assets/icons/templates-icon.svg";
 import tutorialIcon from "../assets/icons/tutorial-icon.svg";
-// console.log(Dashboard);
+
 export default {
   data() {
     return {

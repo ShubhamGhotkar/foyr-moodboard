@@ -1,21 +1,23 @@
 <template>
-  <section class="slider-section">
+  <section class="slider-section" @keydown="handleKeyPress" tabindex="1">
     <!-- FOR MOODBOARD CARDS -->
     <div
-      class="slider place-center"
-      :ref="`${name}-sliderContainer`"
+      class="slider place-center moodboard-container"
+      :ref="`sliderContainer`"
       @scroll="handleScrollEvent"
       v-if="name === `moodBoard`"
     >
       <div
-        class="slider_items moodeboardSlider"
-        :class="{ itemFirst: index === 0 }"
+        class="slider_items"
         v-for="(slider, index) in sliderData"
         :style="handleScroll"
         :key="slider._id"
-        @click="handleSliderClick(slider)"
       >
-        <MoodboardProjectCard :data="slider" :index="index" />
+        <MoodboardProjectCard
+          :data="slider"
+          :index="index"
+          @click="() => handleSliderClick(slider)"
+        />
       </div>
     </div>
 
@@ -31,7 +33,7 @@
         v-for="slider in sliderData"
         :style="handleScroll"
         :key="slider.id + `${Math.random()}`"
-        @click="handleSliderClick(slider)"
+        @click="() => handleSliderClick(slider)"
       >
         <div class="slider_items-images">
           <img
@@ -115,6 +117,7 @@
 import MoodboardProjectCard from "./MoodboardProjectCard.vue";
 export default {
   props: ["sliderArray", "name"],
+  mounted() {},
   data() {
     return {
       slideToShow: 5,
@@ -123,16 +126,17 @@ export default {
       leftSliderClick: false,
       currentIndex: 0,
       scrollX: 0,
+      x: 0,
 
       //SLIDER DATA
       sliderData: [],
       isTemplatesClick: false,
+      cardWidth: 276,
     };
   },
   components: {
     MoodboardProjectCard,
   },
-  mounted() {},
   created() {
     this.rightSlideCount = this.sliderArray.length - this.slideToShow;
     this.sliderData = this.sliderArray;
@@ -157,6 +161,28 @@ export default {
     },
   },
   methods: {
+    handleKeyPress(e) {
+      // let ele = this.$refs.sliderContainer;
+
+      // console.log(ele.childElementCount);
+      // console.log(ele.clientWidth);
+      // ele.scrollLeft = 280;
+      if (e.key === "ArrowLeft") {
+        // if (this.x >= 0) {
+        // this.x += 20.5;
+        // ele.style.transform = `translateX(${this.x}%)`;
+        // console.log("ArrowLeft", this.x);
+        // }
+        this.handleSlider("left");
+      } else if (e.key === "ArrowRight") {
+        this.handleSlider("right");
+        // if (this.x <= 0) {
+        // this.x -= 20.5;
+        // console.log("ArrowRight", this.x);
+        // ele.style.transform = `translateX(${this.x}%)`;
+        // }
+      }
+    },
     setText() {
       if (this.name === "styleSlider") {
         return `View Style`;
@@ -172,14 +198,14 @@ export default {
           this.rightSlideCount--;
           this.leftSlideCount++;
           this.currentIndex += 1;
-          this.scrollX -= 276;
+          this.scrollX -= this.cardWidth;
         }
       } else if (action === "left") {
         if (this.leftSlideCount > 0) {
           this.rightSlideCount++;
           this.leftSlideCount--;
           this.currentIndex--;
-          this.scrollX += 276;
+          this.scrollX += this.cardWidth;
         }
       }
     },
@@ -200,7 +226,7 @@ export default {
     },
     handleScrollEvent() {
       // Access the slider container
-      const sliderContainer = this.$refs[`${this.name}-sliderContainer`];
+      const sliderContainer = this.$refs.sliderContainer;
 
       // Get scroll position
       const scrollPosition = sliderContainer.scrollLeft;
@@ -219,12 +245,9 @@ export default {
       let pendingCards = Math.floor(actualWidth / cardWidth);
       let totalCards = this.sliderData.length - this.slideToShow;
 
-      // [Violation] Forced reflow while executing JavaScript took 78ms
+      this.rightSlideCount = pendingCards;
+      this.leftSlideCount = totalCards - pendingCards;
 
-      setTimeout(() => {
-        this.rightSlideCount = pendingCards;
-        this.leftSlideCount = totalCards - pendingCards;
-      }, 300);
       this.leftSliderClick = true;
     },
 
@@ -251,12 +274,11 @@ export default {
   width: 100%;
   position: relative;
   margin: 0 auto;
+  // overflow-x: scroll;
+  // overflow-y: visible;
   transition: all 0.8s ease-in-out !important;
-}
-.moodeboardSlider {
-  height: 16rem;
-  &:nth-child(2) {
-    margin-left: 1.72rem !important;
+  &:focus {
+    outline: none;
   }
 }
 
@@ -272,22 +294,22 @@ export default {
   align-items: center;
   flex-wrap: nowrap;
   gap: 1.72rem;
-  scroll-snap-type: x mandatory;
-  scroll-behavior: smooth;
-  -webkit-overflow-scrolling: touch;
-  overflow: scroll;
-  // overflow-y: hidden;
-  // height: fit-content;
+  // scroll-snap-type: x mandatory;
+  // scroll-behavior: smooth;
+  // -webkit-overflow-scrolling: touch;
+  // overflow: scroll;
+  height: max-contentx;
 
-  &::-webkit-scrollbar {
-    width: 0;
-    height: 0;
-  }
+  // &::-webkit-scrollbar {
+  //   width: 0;
+  //   height: 0;
+  // }
 
   &_items {
-    flex: 0 0 18.9%;
+    flex: 0 0 19%;
     position: relative;
     scroll-snap-align: end;
+    // padding: 0 1rem;
 
     &-images {
       width: 100%;
@@ -378,7 +400,11 @@ export default {
 .overFlowHidden {
   overflow: hidden !important;
 }
-.itemFirst {
-  flex: 0 0 38% !important;
+
+.moodboard-container {
+  // background: red;
+  // height: max-content;
+  // padding-bottom: 11rem;
+  // background: transparent;
 }
 </style>

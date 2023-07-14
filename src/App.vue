@@ -77,6 +77,9 @@ body {
   border-radius: 0.6rem;
   cursor: pointer;
   font-weight: 500;
+
+  // position: relative;
+  // z-index: 9;
 }
 
 .header-2 {

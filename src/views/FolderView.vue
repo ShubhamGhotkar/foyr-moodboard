@@ -1,80 +1,65 @@
 <template>
-  <div class="section"></div>
+  <div class="project">
+    <div class="project_container">
+      <div
+        class="cards_container"
+        :class="{ firstCard: index === 0 }"
+        v-for="(slider, index) in projectArray"
+        :key="slider._id"
+      >
+        <MoodboardProjectCard :data="slider" :index="index" name="project" />
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
-// import MoodboardProjectCard from "@/components/MoodboardProjectCard.vue";
+import MoodboardProjectCard from "@/components/MoodboardProjectCard.vue";
 export default {
   components: {
-    // MoodboardProjectCard,
+    MoodboardProjectCard,
+  },
+  created() {
+    this.projectArray = this.$store.state.moodboardArray;
   },
   data() {
     return {
-      slider: {
-        _id: "649d7ba67a11eb9334bb4efd",
-        createdBy: "6140325d5ca59156444e8676",
-        updatedBy: "6140325d5ca59156444e8676",
-        published: false,
-        type: ["project"],
-        isLinkedToInspiration: false,
-        isSampleProject: false,
-        isMaterialsMapOptimized: false,
-        folder: null,
-        cameraObjects: [],
-        sharedWith: [],
-        userHistory: [],
-        countOfCommands: 377,
-        colorsArr: [],
-        canvasDimension: {
-          height: 900,
-          width: 1600,
-        },
-        name: "skewrefresh2",
-        accountId: "b86d7843-0be8-4631-8b6e-28003748e62b",
-        superAccountId: "361f7494-f040-4270-aa07-3a2c4acf5b0c",
-        lastSyncedDate: "2023-07-05T10:35:52.842Z",
-        currentMode: {
-          value: "2D",
-        },
-        properties: {
-          thumbnail:
-            "https://foyrmoodboard.s3.ap-south-1.amazonaws.com/foyrmoodboard/slideThumbnailImages/649d7ba67a11eb9334bb4efd",
-        },
-        projectSettings: {},
-        createdAt: "2023-06-29T12:40:06.727Z",
-        updatedAt: "2023-07-05T12:25:33.572Z",
-        epochLastUpdateTimeStamp: 1688553352842,
-        lastCheckpointOnCommandCount: 357,
-        recentlyUsedColorList: [
-          "#DE3636",
-          "#EBBEA1",
-          "#FFB128",
-          "#D74040",
-          "#E3C4C4",
-          "#AA7070",
-          "#FFFFFF",
-          "#3F0606",
-          "#BF1515",
-          "#AB637F",
-          "#D07676",
-          "#AB6F63",
-          "#875D0C",
-          "#CEBA92",
-        ],
-      },
+      projectArray: [],
     };
   },
 };
 </script>
 
-<style scoped>
-.section {
-  height: 90vh;
+<style lang="scss" scoped>
+.project {
   width: 100vw;
+  min-height: 100vh;
+  height: auto;
   display: grid;
-  place-items: center;
+  grid-template-columns: 6.5vw 93.5vw;
+
+  &_container {
+    width: 100%;
+    grid-column: 2/3;
+    padding-top: 6.5rem;
+    min-height: 100vh;
+    background-color: #fff;
+    padding: 8.5rem 4.8rem 2.8rem 2.6rem;
+
+    display: flex;
+
+    gap: 1.7rem;
+    justify-content: flex-start;
+    align-items: flex-start;
+    flex-wrap: wrap;
+  }
 }
-.div {
-  position: relative;
+
+.cards_container {
+  flex: 0 0 18%;
+  margin: 0 auto;
+}
+.firstCard {
+  // flex: 0 0 37.7%;
 }
 </style>
