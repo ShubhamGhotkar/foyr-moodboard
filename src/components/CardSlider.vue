@@ -29,9 +29,9 @@
       <div
         class="slider_items"
         v-for="slider in sliderData"
-        :style="handleScroll"
         :key="slider.id + `${Math.random()}`"
         @click="() => handleSliderClick(slider)"
+        :style="handleScroll"
       >
         <div class="slider_items-images">
           <img
@@ -121,7 +121,7 @@ export default {
       slideToShow: 5,
       rightSlideCount: 0,
       leftSlideCount: 0,
-      leftSliderClick: false,
+      isLeftBtnShow: false,
       currentIndex: 0,
       scrollX: 0,
 
@@ -142,10 +142,14 @@ export default {
     handleScroll() {
       return `
             transform: translateX(${this.scrollX}px);
+            transition: all 0.6s ease-in-out !important;
       `;
     },
+    transition() {
+      return `transition: all 0.6s ease-in-out !important;`;
+    },
     checkLeft() {
-      if (this.leftSlideCount > 0 && this.leftSliderClick) {
+      if (this.leftSlideCount > 0 && this.isLeftBtnShow) {
         return true;
       }
       return false;
@@ -176,7 +180,7 @@ export default {
     handleSlider(action) {
       if (action === "right") {
         if (this.rightSlideCount > 0) {
-          this.leftSliderClick = true;
+          this.isLeftBtnShow = true;
           this.rightSlideCount--;
           this.leftSlideCount++;
           this.currentIndex += 1;
@@ -227,7 +231,6 @@ export default {
   width: 100%;
   position: relative;
   margin: 0 auto;
-  transition: all 0.8s ease-in-out !important;
   &:focus {
     outline: none;
   }
@@ -250,7 +253,6 @@ export default {
   &_items {
     flex: 0 0 19%;
     position: relative;
-    scroll-snap-align: end;
 
     &-images {
       width: 100%;
